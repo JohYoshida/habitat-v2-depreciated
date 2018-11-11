@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
 
 class Calendar extends Component {
   constructor(props) {
@@ -20,9 +20,11 @@ class Calendar extends Component {
       for (var i = 1; i <= months[month]; i++) {
         let key = `${month}-${i}`
         days.push(
-          <View style={styles.days} key={key} >
-            <Text>{ i }</Text>
-          </View>
+          <TouchableOpacity key={key} onPress={this._onPress.bind(this)}>
+            <View style={styles.days} >
+              <Text>{ i }</Text>
+            </View>
+          </TouchableOpacity>
         );
       }
       year.push(
@@ -34,10 +36,17 @@ class Calendar extends Component {
     }
 
     return (
-      <View style={styles.year}>
-        { year }
-      </View>
+      <ScrollView>
+        <Text style={styles.text}>{this.props.habit}</Text>
+        <View style={styles.year}>
+          { year }
+        </View>
+      </ScrollView>
     );
+  }
+
+  _onPress() {
+
   }
 }
 
@@ -47,12 +56,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     margin: 1,
-    backgroundColor: "darkseagreen",
+    backgroundColor: "#486cc9",
   },
   month: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "flex-start"
+  },
+  text: {
+    alignSelf: "center",
+    fontSize: 30,
   },
   year: {
     flex: 1,
