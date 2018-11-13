@@ -1,90 +1,74 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
+
+const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      completed: {},
     };
   }
 
-  render() {
-    const months = {
-      Jan: 31, Feb: 28, Mar: 31, Apr: 30, May: 31, Jun: 30,
-      Jul: 31, Aug: 31, Sep: 30, Oct: 31, Nov: 30, Dec: 31,
-    };
-
-    const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
-    const Year = [];
-
+  componentDidMount() {
     Months.forEach(month => {
       const { data } = this.props;
-      for (var obj in data) {
-        if (month === obj) {
-          // console.log(month, data[month]);
-          const Days = [];
-          for (var i = 1; i <= data[month].length; i++) {
-            let key = `${month}-${i}`;
-            console.log(month, i, typeof(data[month][i - 1]));
-            if (data[month][i - 1] === "1") {
-              Days.push(
-                <TouchableOpacity
-                  key={key}
-                  onLongPress={this._onLongPress.bind(this, this.props.habit, key)}
-                  >
-                  <View style={styles.complete} >
-                    <Text>{ i }</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            } else {
-              Days.push(
-                <TouchableOpacity
-                  key={key}
-                  onLongPress={this._onLongPress.bind(this, this.props.habit, key)}
-                >
-                  <View style={styles.incomplete} >
-                    <Text>{ i }</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }
-          }
-          Year.push(
-            <View style={styles.month} key={month}>
-              <Text>{ month }</Text>
-              { Days }
-            </View>
-          );
-
+      let record = data[month].split("");;
+      let i = 1;
+      record.forEach(char => {
+        if (char === "1") {
+          let { completed } = this.state;
+          completed[`${month}-${i}`] = true;
+          this.setState({ completed });
         }
-      }
-    })
+        i++;
+      });
+    });
+  }
 
-    // for (var month in months) {
-    //   const days = [];
-    //   for (var i = 1; i <= months[month]; i++) {
-    //     let key = `${month}-${i}`;
-    //     days.push(
-    //       <TouchableOpacity
-    //         key={key}
-    //         onLongPress={this._onLongPress.bind(this, this.props.habit, key)}
-    //       >
-    //         <View style={styles.complete} >
-    //           <Text>{ i }</Text>
-    //         </View>
-    //       </TouchableOpacity>
-    //     );
-    //   }
-    //   Year.push(
-    //     <View style={styles.month} key={month}>
-    //       <Text>{ month }</Text>
-    //       { days }
-    //     </View>
-    //   );
-    // }
+  render() {
+    const Year = [];
+    Months.forEach(month => {
+      const { data } = this.props;
+      let record = data[month].split("");
+      let i = 1;
+      const Days = [];
+      record.forEach(char => {
+        const key = `${month}-${i}`;
+        if (this.state.completed[key]) {
+          Days.push(
+            <TouchableOpacity
+              key={key}
+              onPress={this._onPress.bind(this, this.props.habit, key)}
+            >
+              <View style={styles.complete} >
+                <Text>{ i }</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        } else {
+          Days.push(
+            <TouchableOpacity
+              key={key}
+              onPress={this._onPress.bind(this, this.props.habit, key)}
+            >
+              <View style={styles.incomplete} >
+                <Text>{ i }</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        }
+        i++;
+      });
+      Year.push(
+        <View style={styles.month} key={month}>
+          <Text>{ month }</Text>
+          { Days }
+        </View>
+      );
+    });
 
     return (
       <ScrollView>
@@ -96,10 +80,17 @@ class Calendar extends Component {
     );
   }
 
-  _onLongPress(habit, key) {
-    if (this.props.days[key]) {
+  _onPress(habit, key) {
+    const keys = key.split("-");
+    if (this.state.completed[key]) {
+      let { completed } = this.state;
+      delete completed[key];
+      this.setState({ completed });
       this.props.toggle(habit, key, false);
     } else {
+      let { completed } = this.state;
+      completed[key] = true;
+      this.setState({ completed });
       this.props.toggle(habit, key, true);
     }
   }
@@ -111,14 +102,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     margin: 1,
-    backgroundColor: "#3672FD",
+    backgroundColor: "#2196F3",
   },
   incomplete: {
     flex: 0,
     borderWidth: 1,
     height: 40,
     margin: 1,
-    backgroundColor: "#adc4f9",
+    backgroundColor: "#E3F2FD",
   },
   month: {
     flex: 1,
