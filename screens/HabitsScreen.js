@@ -152,7 +152,6 @@ export default class HomeScreen extends React.Component {
   }
 
   _toggleDay(habit, key, bool) {
-    console.log(habit, key, bool);
     const words = habit.split(" ");
     const habitParam = words.join("%20");
     fetch(`${URL}/habits/${habitParam}/2018`, {

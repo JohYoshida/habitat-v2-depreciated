@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { Alert, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import React, { Component } from "react";
+import { Alert, Text, TouchableOpacity, StyleSheet, View } from "react-native";
 
 class HabitsList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
@@ -29,21 +28,23 @@ class HabitsList extends Component {
   }
 
   _onPress(name) {
-    this.props.onPress(name)
+    this.props.onPress(name);
   }
 
   _onLongPress(name) {
-    Alert.alert(
-      'Delete habit',
-      'Are you sure you want to delete this habit?',
-      [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => {
-            this.props.onLongPress(name)
-          }
-        },
-      ],
-    )
+    Alert.alert("Delete habit", "Are you sure you want to delete this habit?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          this.props.onLongPress(name);
+        }
+      }
+    ]);
   }
 }
 
@@ -53,17 +54,16 @@ const styles = StyleSheet.create({
     padding: 5,
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: "#2196F3",
+    backgroundColor: "#2196F3"
   },
   name: {
     fontSize: 15,
-    color: "white",
+    color: "white"
   },
   date: {
     fontSize: 10,
-    color: "white",
+    color: "white"
   }
-
 });
 
 export default HabitsList;

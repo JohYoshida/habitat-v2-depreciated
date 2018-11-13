@@ -1,21 +1,40 @@
-import React, { Component } from 'react';
-import { Alert, Text, TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
+import React, { Component } from "react";
+import {
+  Alert,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 
-const Months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const Months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
 
 class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      completed: {},
+      completed: {}
     };
   }
 
   componentDidMount() {
     Months.forEach(month => {
       const { data } = this.props;
-      let record = data[month].split("");;
+      let record = data[month].split("");
       let i = 1;
       record.forEach(char => {
         if (char === "1") {
@@ -43,8 +62,8 @@ class Calendar extends Component {
               key={key}
               onPress={this._onPress.bind(this, this.props.habit, key)}
             >
-              <View style={styles.complete} >
-                <Text>{ i }</Text>
+              <View style={styles.complete}>
+                <Text>{i}</Text>
               </View>
             </TouchableOpacity>
           );
@@ -54,8 +73,8 @@ class Calendar extends Component {
               key={key}
               onPress={this._onPress.bind(this, this.props.habit, key)}
             >
-              <View style={styles.incomplete} >
-                <Text>{ i }</Text>
+              <View style={styles.incomplete}>
+                <Text>{i}</Text>
               </View>
             </TouchableOpacity>
           );
@@ -64,8 +83,8 @@ class Calendar extends Component {
       });
       Year.push(
         <View style={styles.month} key={month}>
-          <Text>{ month }</Text>
-          { Days }
+          <Text>{month}</Text>
+          {Days}
         </View>
       );
     });
@@ -73,9 +92,7 @@ class Calendar extends Component {
     return (
       <ScrollView>
         <Text style={styles.text}>{this.props.habit}</Text>
-        <View style={styles.year}>
-          { Year }
-        </View>
+        <View style={styles.year}>{Year}</View>
       </ScrollView>
     );
   }
@@ -102,14 +119,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     margin: 1,
-    backgroundColor: "#2196F3",
+    backgroundColor: "#2196F3"
   },
   incomplete: {
     flex: 0,
     borderWidth: 1,
     height: 40,
     margin: 1,
-    backgroundColor: "#E3F2FD",
+    backgroundColor: "#E3F2FD"
   },
   month: {
     flex: 1,
@@ -118,13 +135,13 @@ const styles = StyleSheet.create({
   },
   text: {
     alignSelf: "center",
-    fontSize: 30,
+    fontSize: 30
   },
   year: {
     flex: 1,
     flexDirection: "row",
-    marginTop: 12,
-  },
+    marginTop: 12
+  }
 });
 
 export default Calendar;
