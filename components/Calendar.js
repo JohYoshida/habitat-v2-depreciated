@@ -50,30 +50,32 @@ class Calendar extends Component {
   render() {
     const Year = [];
     Months.forEach(month => {
-      const { data } = this.props;
+      const { data, habit } = this.props;
       let record = data[month].split("");
       let i = 1;
       const Days = [];
       record.forEach(char => {
         const key = `${month}-${i}`;
         if (this.state.completed[key]) {
+          let style = "complete_" + habit.color;
           Days.push(
             <TouchableOpacity
               key={key}
-              onPress={this._onPress.bind(this, this.props.habit, key)}
+              onPress={this._onPress.bind(this, habit, key)}
             >
-              <View style={styles.complete}>
+              <View style={styles[style]}>
                 <Text>{i}</Text>
               </View>
             </TouchableOpacity>
           );
         } else {
+          let style = "incomplete_" + habit.color;
           Days.push(
             <TouchableOpacity
               key={key}
-              onPress={this._onPress.bind(this, this.props.habit, key)}
+              onPress={this._onPress.bind(this, habit, key)}
             >
-              <View style={styles.incomplete}>
+              <View style={styles[style]}>
                 <Text>{i}</Text>
               </View>
             </TouchableOpacity>
@@ -91,7 +93,7 @@ class Calendar extends Component {
 
     return (
       <ScrollView>
-        <Text style={styles.text}>{this.props.habit}</Text>
+        <Text style={styles.text}>{this.props.habit.name}</Text>
         <View style={styles.year}>{Year}</View>
       </ScrollView>
     );
@@ -114,20 +116,6 @@ class Calendar extends Component {
 }
 
 const styles = StyleSheet.create({
-  complete: {
-    flex: 0,
-    borderWidth: 1,
-    height: 40,
-    margin: 1,
-    backgroundColor: "#2196F3"
-  },
-  incomplete: {
-    flex: 0,
-    borderWidth: 1,
-    height: 40,
-    margin: 1,
-    backgroundColor: "#E3F2FD"
-  },
   month: {
     flex: 1,
     flexDirection: "column",
@@ -141,7 +129,119 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginTop: 12
-  }
+  },
+  complete_red: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#f44336"
+  },
+  complete_orange: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#FF9800"
+  },
+  complete_yellow: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#FFEB3B"
+  },
+  complete_lime: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#CDDC39"
+  },
+  complete_green: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#4CAF50"
+  },
+  complete_blue: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#2196F3"
+  },
+  complete_purple: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#9C27B0"
+  },
+  complete_indigo: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#3F51B5"
+  },
+  incomplete_red: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#ffebee"
+  },
+  incomplete_orange: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#FFF3E0"
+  },
+  incomplete_yellow: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#FFFDE7"
+  },
+  incomplete_lime: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#F9FBE7"
+  },
+  incomplete_green: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#E8F5E9"
+  },
+  incomplete_blue: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#E3F2FD"
+  },
+  incomplete_purple: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#F3E5F5"
+  },
+  incomplete_indigo: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#E8EAF6"
+  },
 });
 
 export default Calendar;

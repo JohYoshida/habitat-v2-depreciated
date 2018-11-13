@@ -14,6 +14,7 @@ import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../components/Calendar";
 import HabitsList from "../components/HabitsList";
+import ColorPicker from "../components/ColorPicker";
 
 const URL = "https://habitat-exp.herokuapp.com";
 
@@ -29,6 +30,7 @@ export default class HomeScreen extends React.Component {
       habitModal: false,
       newHabitModal: false,
       newHabitName: "",
+      newHabitColor: "",
       habits: [],
       calendarData: {},
     };
@@ -50,9 +52,10 @@ export default class HomeScreen extends React.Component {
             autoFocus={true}
             onChangeText={newHabitName => this.setState({ newHabitName })}
           />
+        <ColorPicker pickColor={this._pickColor.bind(this)}/>
           <Button
             title="Add Habit"
-            onPress={this._postHabits.bind(this)}
+            onPress={this._postHabit.bind(this)}
           />
         </Modal>
 
@@ -99,7 +102,7 @@ export default class HomeScreen extends React.Component {
   }
 
   _showCalendar(habit) {
-    fetch(`${URL}/habits/${habit}/2018`)
+    fetch(`${URL}/habits/${habit.name}/2018`)
       .then(res => res.json())
       .then(json => JSON.parse(json.rows))
       .then(json => this.setState({ habit, habitModal: true, calendarData: json }))
@@ -117,7 +120,7 @@ export default class HomeScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   }
 
-  _postHabits() {
+  _postHabit() {
     fetch(URL + "/habits", {
       method: 'POST',
       headers: {
@@ -126,6 +129,7 @@ export default class HomeScreen extends React.Component {
       },
       body: JSON.stringify({
         name: this.state.newHabitName,
+        color: this.state.newHabitColor,
       }),
     })
     .then(res => res.json())
@@ -176,6 +180,10 @@ export default class HomeScreen extends React.Component {
       }
     })
     .catch(err => console.log("Error!", err));
+  }
+
+  _pickColor(color) {
+    this.setState({ newHabitColor: color });
   }
 }
 
