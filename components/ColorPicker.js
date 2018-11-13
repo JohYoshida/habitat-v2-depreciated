@@ -10,59 +10,40 @@ class ColorPicker extends Component {
   }
 
   render() {
+    const colors = ["red", "orange", "yellow", "lime",
+                    "green", "blue", "purple", "indigo"];
+    const row = [];
+    colors.forEach(color => {
+      if (color === this.state.color) {
+        row.push(
+          <TouchableOpacity
+            key={color}
+            style={styles.touchContainer}
+            onPress={this._onPress.bind(this, color)}
+            >
+            <View style={styles[color]}></View>
+          </TouchableOpacity>
+        );
+      } else {
+        row.push(
+          <TouchableOpacity
+            key={color}
+            onPress={this._onPress.bind(this, color)}
+            >
+            <View style={styles[color]}></View>
+          </TouchableOpacity>
+        );
+      }
+    });
+    const top = row.splice(0, 4);
+    const bottom = row.splice(4, row.length);
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "red")}
-          >
-            <View style={styles.red}></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "orange")}
-          >
-            <View style={styles.orange}></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "yellow")}
-          >
-            <View style={styles.yellow}></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "lime")}
-          >
-            <View style={styles.lime}></View>
-          </TouchableOpacity>
+          {top}
         </View>
         <View style={styles.row}>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "green")}
-          >
-            <View style={styles.green}></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "blue")}
-          >
-            <View style={styles.blue}></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "purple")}
-          >
-            <View style={styles.purple}></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.touchContainer}
-            onPress={this._onPress.bind(this, "indigo")}
-          >
-            <View style={styles.indigo}></View>
-          </TouchableOpacity>
+          {row}
         </View>
       </View>
     );
@@ -70,7 +51,6 @@ class ColorPicker extends Component {
 
   _onPress(color) {
     this.setState({ color });
-    console.log(color);
     this.props.pickColor(color);
   }
 }
@@ -85,6 +65,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   touchContainer: {
+    borderWidth: 1,
+    borderRadius: 100,
+    height: 56,
   },
   red: {
     height: 50,
