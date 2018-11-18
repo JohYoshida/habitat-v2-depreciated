@@ -32,10 +32,10 @@ class HabitsList extends Component {
       );
     });
 
-    if (this.props.isLoadingComplete) {
-      return <ScrollView>{Habits}</ScrollView>;
-    } else {
+    if (this.props.isLoading) {
       return <LoadingPanel />;
+    } else {
+      return <ScrollView>{Habits}</ScrollView>;
     }
   }
 

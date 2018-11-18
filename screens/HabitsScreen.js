@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
     this.state = {
       habit: "",
       habitModal: false,
-      isLoadingComplete: true,
+      isGettingHabits: true,
       newHabitModal: false,
       newHabitName: "",
       newHabitColor: "",
@@ -71,7 +71,7 @@ export default class HomeScreen extends React.Component {
         </Modal>
 
         <HabitsList
-          isLoadingComplete={this.state.isLoadingComplete}
+          isLoading={this.state.isGettingHabits}
           habits={this.state.habits}
           onPress={this._showCalendar.bind(this)}
           onLongPress={this._deleteHabit.bind(this)}
@@ -111,10 +111,10 @@ export default class HomeScreen extends React.Component {
   }
 
   _getHabits() {
-    this.setState({ isLoadingComplete: false });
+    this.setState({ isGettingHabits: true });
     fetch(URL + "/habits")
       .then(res => res.json())
-      .then(json => this.setState({ habits: json, isLoadingComplete: true }))
+      .then(json => this.setState({ habits: json, isGettingHabits: false }))
       .catch(err => console.log("Error!", err));
   }
 
@@ -155,7 +155,7 @@ export default class HomeScreen extends React.Component {
       .then(res => res.json())
       .then(json => JSON.parse(json.rows))
       .then(json =>
-        this.setState({ habit, habitModal: true, calendarData: json })
+        this.setState({ habit, habitModal: true, calendarData: json, })
       )
       .catch(err => console.log("Error!", err));
   }
