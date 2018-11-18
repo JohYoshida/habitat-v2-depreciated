@@ -131,6 +131,12 @@ export default class HomeScreen extends React.Component {
   }
 
   _postHabit() {
+    const colors = ["red", "orange", "yellow", "lime",
+                    "green", "blue", "purple", "indigo"];
+    let color;
+    if (this.state.newHabitColor === "") {
+      color = colors[Math.floor((Math.random() * 8))];
+    } else color = this.state.newHabitColor;
     fetch(URL + "/habits", {
       method: "POST",
       headers: {
@@ -139,7 +145,7 @@ export default class HomeScreen extends React.Component {
       },
       body: JSON.stringify({
         name: this.state.newHabitName,
-        color: this.state.newHabitColor
+        color
       })
     })
       .then(res => res.json())
