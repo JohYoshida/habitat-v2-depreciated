@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Alert,
   Button,
@@ -9,7 +9,7 @@ import {
   ScrollView,
   StyleSheet,
   View
-} from 'react-native';
+} from "react-native";
 import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../components/Calendar";
@@ -32,12 +32,12 @@ export default class HomeScreen extends React.Component {
       newHabitName: "",
       newHabitColor: "",
       habits: [],
-      calendarData: {},
+      calendarData: {}
     };
   }
 
   componentDidMount() {
-    this._getHabits()
+    this._getHabits();
   }
 
   render() {
@@ -46,23 +46,22 @@ export default class HomeScreen extends React.Component {
         <Modal
           animationType="slide"
           visible={this.state.newHabitModal}
-          onRequestClose={this._hideNewHabitModal.bind(this)}>
+          onRequestClose={this._hideNewHabitModal.bind(this)}
+        >
           <TextInput
             style={styles.textInput}
             autoFocus={true}
             onChangeText={newHabitName => this.setState({ newHabitName })}
           />
-        <ColorPicker pickColor={this._pickColor.bind(this)}/>
-          <Button
-            title="Add Habit"
-            onPress={this._postHabit.bind(this)}
-          />
+          <ColorPicker pickColor={this._pickColor.bind(this)} />
+          <Button title="Add Habit" onPress={this._postHabit.bind(this)} />
         </Modal>
 
         <Modal
           animationType="slide"
           visible={this.state.habitModal}
-          onRequestClose={this._hideCalendar.bind(this)}>
+          onRequestClose={this._hideCalendar.bind(this)}
+        >
           <Calendar
             habit={this.state.habit}
             data={this.state.calendarData}
@@ -70,7 +69,7 @@ export default class HomeScreen extends React.Component {
           />
         </Modal>
 
-        <ScrollView style={styles.container} >
+        <ScrollView style={styles.container}>
           <HabitsList
             habits={this.state.habits}
             onPress={this._showCalendar.bind(this)}
@@ -78,7 +77,10 @@ export default class HomeScreen extends React.Component {
           />
         </ScrollView>
 
-        <TouchableOpacity style={styles.button} onPress={this._showNewHabitModal.bind(this)}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this._showNewHabitModal.bind(this)}
+        >
           <Ionicons
             style={styles.icon}
             name={
@@ -93,24 +95,19 @@ export default class HomeScreen extends React.Component {
     );
   }
 
-  _showNewHabitModal() {
-    this.setState({ newHabitModal: true });
-  }
-
-  _hideNewHabitModal() {
-    this.setState({ newHabitModal: false });
-  }
-
-  _showCalendar(habit) {
-    fetch(`${URL}/habits/${habit.name}/2018`)
+  _deleteHabit(name) {
+    fetch(URL + "/habits", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "DELETE"
+      },
+      body: JSON.stringify({ name })
+    })
       .then(res => res.json())
-      .then(json => JSON.parse(json.rows))
-      .then(json => this.setState({ habit, habitModal: true, calendarData: json }))
+      .then(json => this._getHabits())
       .catch(err => console.log("Error!", err));
-  }
-
-  _hideCalendar() {
-    this.setState({ habitModal: false });
   }
 
   _getHabits() {
@@ -120,77 +117,81 @@ export default class HomeScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   }
 
+  _hideCalendar() {
+    this.setState({ habitModal: false });
+  }
+
+  _hideNewHabitModal() {
+    this.setState({ newHabitModal: false });
+  }
+
+  _pickColor(color) {
+    this.setState({ newHabitColor: color });
+  }
+
   _postHabit() {
     fetch(URL + "/habits", {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         name: this.state.newHabitName,
-        color: this.state.newHabitColor,
-      }),
+        color: this.state.newHabitColor
+      })
     })
-    .then(res => res.json())
-    .then(json => {
-      this.setState({ newHabitModal: false });
-      this._getHabits();
-    })
-    .catch(err => console.log("Error!", err));
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ newHabitModal: false });
+        this._getHabits();
+      })
+      .catch(err => console.log("Error!", err));
   }
 
-  _deleteHabit(name) {
-    fetch(URL + '/habits', {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Methods' : 'DELETE',
-      },
-      body: JSON.stringify({ name }),
-    })
-    .then(res => res.json())
-    .then(json => this._getHabits())
-    .catch(err => console.log("Error!", err));
+  _showCalendar(habit) {
+    fetch(`${URL}/habits/${habit.name}/2018`)
+      .then(res => res.json())
+      .then(json => JSON.parse(json.rows))
+      .then(json =>
+        this.setState({ habit, habitModal: true, calendarData: json })
+      )
+      .catch(err => console.log("Error!", err));
+  }
+
+  _showNewHabitModal() {
+    this.setState({ newHabitModal: true });
   }
 
   _toggleDay(habit, key, bool) {
     const words = habit.split(" ");
     const habitParam = words.join("%20");
     fetch(`${URL}/habits/${habitParam}/2018`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         habit,
         day: key,
         completed: bool
-      }),
+      })
     })
-    .then(res => res.json())
-    .then(json => {
-      // TODO: send alert if calendar can't update
-      if (json.msg) {
-        return true;
-      } else {
-        return false;
-      }
-    })
-    .catch(err => console.log("Error!", err));
-  }
-
-  _pickColor(color) {
-    this.setState({ newHabitColor: color });
+      .then(res => res.json())
+      .then(json => {
+        // TODO: send alert if calendar can't update
+        if (json.msg) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(err => console.log("Error!", err));
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   button: {
     alignItems: "center",
     padding: 20,
@@ -199,6 +200,9 @@ const styles = StyleSheet.create({
     marginRight: 110,
     backgroundColor: "#2196F3",
     borderRadius: 100
+  },
+  container: {
+    flex: 1
   },
   icon: {
     fontSize: 100
