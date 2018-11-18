@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Alert, Text, TouchableOpacity, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 
 class HabitsList extends Component {
   constructor(props) {
@@ -23,7 +30,16 @@ class HabitsList extends Component {
         </TouchableOpacity>
       );
     });
-    return Habits;
+
+    if (this.props.isLoadingComplete) {
+      return <ScrollView>{Habits}</ScrollView>;
+    } else {
+      return (
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      );
+    }
   }
 
   _onPress(habit) {
@@ -119,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#3F51B5",
     borderColor: "#1A237E"
-  },
+  }
 });
 
 export default HabitsList;

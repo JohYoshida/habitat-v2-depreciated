@@ -28,6 +28,7 @@ export default class HomeScreen extends React.Component {
     this.state = {
       habit: "",
       habitModal: false,
+      isLoadingComplete: true,
       newHabitModal: false,
       newHabitName: "",
       newHabitColor: "",
@@ -69,13 +70,12 @@ export default class HomeScreen extends React.Component {
           />
         </Modal>
 
-        <ScrollView style={styles.container}>
-          <HabitsList
-            habits={this.state.habits}
-            onPress={this._showCalendar.bind(this)}
-            onLongPress={this._deleteHabit.bind(this)}
-          />
-        </ScrollView>
+        <HabitsList
+          isLoadingComplete={this.state.isLoadingComplete}
+          habits={this.state.habits}
+          onPress={this._showCalendar.bind(this)}
+          onLongPress={this._deleteHabit.bind(this)}
+        />
 
         <TouchableOpacity
           style={styles.button}
@@ -111,9 +111,10 @@ export default class HomeScreen extends React.Component {
   }
 
   _getHabits() {
+    this.setState({ isLoadingComplete: false });
     fetch(URL + "/habits")
       .then(res => res.json())
-      .then(json => this.setState({ habits: json }))
+      .then(json => this.setState({ habits: json, isLoadingComplete: true }))
       .catch(err => console.log("Error!", err));
   }
 
