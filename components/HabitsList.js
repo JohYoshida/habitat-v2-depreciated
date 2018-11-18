@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: "#FFEB3B",
-    borderColor: "#F57F17"
+    borderColor: "#FDD835"
   },
   lime: {
     margin: 10,
