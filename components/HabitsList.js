@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import LoadingPanel from "./LoadingPanel";
 
 class HabitsList extends Component {
   constructor(props) {
@@ -34,11 +35,7 @@ class HabitsList extends Component {
     if (this.props.isLoadingComplete) {
       return <ScrollView>{Habits}</ScrollView>;
     } else {
-      return (
-        <View>
-          <Text>Loading...</Text>
-        </View>
-      );
+      return <LoadingPanel />;
     }
   }
 
