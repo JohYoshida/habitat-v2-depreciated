@@ -171,7 +171,7 @@ export default class HomeScreen extends React.Component {
   }
 
   _toggleDay(habit, key, bool) {
-    const words = habit.split(" ");
+    const words = habit.name.split(" ");
     const habitParam = words.join("%20");
     fetch(`${URL}/habits/${habitParam}/2018`, {
       method: "POST",
@@ -180,7 +180,7 @@ export default class HomeScreen extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        habit,
+        habit: habit.name,
         day: key,
         completed: bool
       })
