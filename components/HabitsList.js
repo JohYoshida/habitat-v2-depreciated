@@ -6,7 +6,9 @@ import LoadingPanel from "./LoadingPanel";
 class HabitsList extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isRefreshing: false,
+    };
   }
 
   render() {
@@ -18,10 +20,20 @@ class HabitsList extends Component {
           data={this.props.habits}
           renderItem={this._renderItem}
           ListEmptyComponent={this._renderEmpty}
+          ItemSeparatorComponent={this._renderSeparator}
           keyExtractor={this._keyExtractor}
+          onRefresh={this._handleRefresh.bind(this)}
+          refreshing={this.state.isRefreshing}
         />
       );
     }
+  }
+
+  _handleRefresh() {
+    this.setState({ isRefreshing: true }, () => {
+      this.props.onRefresh();
+      this.setState({ isRefreshing: false })
+    });
   }
 
   _keyExtractor = (item, index) => item.id;
@@ -33,7 +45,11 @@ class HabitsList extends Component {
       onPress={this.props.onPress}
       onLongPress={this.props.onLongPress}
     />
-  )
+  );
+
+  _renderSeparator = () => {
+    return <View style={styles.separator} />;
+  }
 
   _renderEmpty = () => {
     return (
@@ -49,6 +65,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     alignItems: "center",
+  },
+  separator: {
+    height: 5,
   }
 });
 

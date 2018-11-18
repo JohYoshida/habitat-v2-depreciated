@@ -75,6 +75,7 @@ export default class HomeScreen extends React.Component {
           habits={this.state.habits}
           onPress={this._showCalendar.bind(this)}
           onLongPress={this._deleteHabit.bind(this)}
+          onRefresh={this._getHabits.bind(this)}
         />
 
         <TouchableOpacity
