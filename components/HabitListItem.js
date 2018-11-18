@@ -8,12 +8,58 @@ class HabitListItem extends PureComponent {
 
   render() {
     const { habit } = this.props;
+    let primary = "";
+    let secondary = "";
+    switch (habit.color) {
+      case "red":
+        primary = "#f44336";
+        secondary = "#b71c1c";
+        break;
+      case "orange":
+        primary = "#FF9800";
+        secondary = "#E65100";
+        break;
+      case "yellow":
+        primary = "#FFEB3B";
+        secondary = "#FDD835";
+        break;
+      case "lime":
+        primary = "#CDDC39";
+        secondary = "#827717";
+        break;
+      case "green":
+        primary = "#4CAF50";
+        secondary = "#1B5E20";
+        break;
+      case "blue":
+        primary = "#2196F3";
+        secondary = "#0D47A1";
+        break;
+      case "purple":
+        primary = "#9C27B0";
+        secondary = "#4A148C";
+        break;
+      case "indigo":
+        primary = "#3F51B5";
+        secondary = "#1A237E";
+        break;
+      default:
+
+    }
     return (
       <TouchableOpacity
         onPress={this._onPress.bind(this, habit)}
         onLongPress={this._onLongPress.bind(this, habit.name)}
       >
-        <View style={styles[habit.color]}>
+        <View style={{
+          marginLeft: 10,
+          marginRight: 10,
+          padding: 5,
+          borderWidth: 1,
+          borderRadius: 5,
+          backgroundColor: primary,
+          borderColor: secondary
+        }}>
           <Text style={styles.name}>{habit.name}</Text>
           <Text style={styles.date}>Created at {habit.createdAt}</Text>
         </View>
@@ -50,70 +96,6 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 10,
     color: "white"
-  },
-  red: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#f44336",
-    borderColor: "#b71c1c"
-  },
-  orange: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#FF9800",
-    borderColor: "#E65100"
-  },
-  yellow: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#FFEB3B",
-    borderColor: "#FDD835"
-  },
-  lime: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#CDDC39",
-    borderColor: "#827717"
-  },
-  green: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#4CAF50",
-    borderColor: "#1B5E20"
-  },
-  blue: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#2196F3",
-    borderColor: "#0D47A1"
-  },
-  purple: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#9C27B0",
-    borderColor: "#4A148C"
-  },
-  indigo: {
-    margin: 10,
-    padding: 5,
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: "#3F51B5",
-    borderColor: "#1A237E"
   }
 });
 
