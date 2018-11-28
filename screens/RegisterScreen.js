@@ -66,7 +66,8 @@ export default class RegisterScreen extends React.Component {
   _register = async () => {
     const { email, password } = this.state;
     if (email && password) {
-      const auth = "Basic " + base64.encode(`${email}:${password}`);
+      const authString = base64.encode(`${email}:${password}`);
+      const auth = "Basic " + authString;
       await fetch(URL + "./users", {
         method: "POST",
         headers: {
@@ -80,6 +81,7 @@ export default class RegisterScreen extends React.Component {
           console.log(json);
           if (json.verified) {
             AsyncStorage.setItem("userToken", email);
+            AsyncStorage.setItem("authString", authString);
             this.props.navigation.navigate("App");
           } else {
             this.setState({ error: json.msg });

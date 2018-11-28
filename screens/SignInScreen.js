@@ -64,7 +64,8 @@ export default class SignInScreen extends React.Component {
 
   _signIn = async () => {
     const { email, password } = this.state;
-    const auth = "Basic " + base64.encode(`${email}:${password}`);
+    const authString = base64.encode(`${email}:${password}`);
+    const auth = "Basic " + authString
     await fetch(URL + "/users", {
       method: "GET",
       headers: {
@@ -77,7 +78,8 @@ export default class SignInScreen extends React.Component {
       .then(json => {
         console.log(json);
         if (json.verified) {
-          AsyncStorage.setItem("userToken", email);
+          AsyncStorage.setItem("userToken", json.id);
+          AsyncStorage.setItem("authString", authString);
           this.props.navigation.navigate("App");
         } else {
           this.setState({ error: json.msg });
