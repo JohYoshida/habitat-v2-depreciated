@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AsyncStorage,
   Alert,
   Button,
   Modal,
@@ -17,6 +18,7 @@ import HabitsList from "../components/HabitsList";
 import ColorPicker from "../components/ColorPicker";
 
 const URL = "https://habitat-exp.herokuapp.com";
+// const URL = "http://localhost:4000";
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -26,6 +28,7 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userToken: "",
       habit: "",
       habitModal: false,
       isGettingHabits: true,
@@ -38,7 +41,7 @@ export default class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._getHabits();
+    this._getUserToken().then(() => this._getHabits());
   }
 
   render() {
@@ -96,7 +99,18 @@ export default class HomeScreen extends React.Component {
     );
   }
 
+  _getUserToken = async() => {
+    try {
+      await AsyncStorage.getItem("userToken").then(userToken => {
+        this.setState({ userToken });
+      });
+    } catch (err) {
+      console.log("Error!", err);
+    }
+  }
+
   _deleteHabit(name) {
+    const user = this.state.userToken;
     fetch(URL + "/habits", {
       method: "DELETE",
       headers: {
@@ -104,7 +118,7 @@ export default class HomeScreen extends React.Component {
         "Content-Type": "application/json",
         "Access-Control-Allow-Methods": "DELETE"
       },
-      body: JSON.stringify({ name })
+      body: JSON.stringify({ user, name })
     })
       .then(res => res.json())
       .then(json => this._getHabits())
@@ -113,7 +127,7 @@ export default class HomeScreen extends React.Component {
 
   _getHabits() {
     this.setState({ isGettingHabits: true });
-    fetch(URL + "/habits")
+    fetch(`${URL}/habits/${this.state.userToken}`)
       .then(res => res.json())
       .then(json => this.setState({ habits: json, isGettingHabits: false }))
       .catch(err => console.log("Error!", err));
@@ -146,6 +160,7 @@ export default class HomeScreen extends React.Component {
       },
       body: JSON.stringify({
         name: this.state.newHabitName,
+        user: this.state.userToken,
         color
       })
     })
