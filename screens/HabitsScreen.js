@@ -110,7 +110,7 @@ export default class HomeScreen extends React.Component {
   }
 
   _deleteHabit(name) {
-    const user = this.state.userToken;
+    const user_id = this.state.userToken;
     fetch(URL + "/habits", {
       method: "DELETE",
       headers: {
@@ -118,7 +118,7 @@ export default class HomeScreen extends React.Component {
         "Content-Type": "application/json",
         "Access-Control-Allow-Methods": "DELETE"
       },
-      body: JSON.stringify({ user, name })
+      body: JSON.stringify({ user_id, name })
     })
       .then(res => res.json())
       .then(json => this._getHabits())
@@ -160,7 +160,7 @@ export default class HomeScreen extends React.Component {
       },
       body: JSON.stringify({
         name: this.state.newHabitName,
-        user: this.state.userToken,
+        user_id: this.state.userToken,
         color
       })
     })
