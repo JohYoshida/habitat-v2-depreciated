@@ -19,6 +19,17 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      userToken: ""
+    };
+  }
+
+  componentDidMount() {
+    this._getUserToken();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -44,7 +55,7 @@ export default class HomeScreen extends React.Component {
             </View>
 
             <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
+              {this.state.userToken}
             </Text>
           </View>
 
@@ -64,6 +75,12 @@ export default class HomeScreen extends React.Component {
         </View>
       </View>
     );
+  }
+
+  _getUserToken = async() => {
+    await AsyncStorage.getItem("userToken").then(userToken => {
+      this.setState({ userToken });
+    });
   }
 
   _logout = async() => {
