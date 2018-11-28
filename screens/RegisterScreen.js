@@ -62,6 +62,7 @@ export default class RegisterScreen extends React.Component {
     );
   }
 
+  // TODO: Check password for minimum requirements
   _register = async () => {
     const { email, password } = this.state;
     if (email && password) {
