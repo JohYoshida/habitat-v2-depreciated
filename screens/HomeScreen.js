@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  AsyncStorage,
+  Button,
   Image,
   Platform,
   ScrollView,
@@ -47,8 +49,8 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
+            <TouchableOpacity onPress={this._logout} style={styles.helpLink}>
+              <Text style={styles.helpLinkText}>Logout</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -62,6 +64,11 @@ export default class HomeScreen extends React.Component {
         </View>
       </View>
     );
+  }
+
+  _logout = async() => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Auth');
   }
 
   _maybeRenderDevelopmentModeWarning() {
