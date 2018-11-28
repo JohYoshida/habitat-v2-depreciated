@@ -79,7 +79,7 @@ export default class RegisterScreen extends React.Component {
         .then(json => {
           console.log(json);
           if (json.verified) {
-            AsyncStorage.setItem("userToken", "abc");
+            AsyncStorage.setItem("userToken", email);
             this.props.navigation.navigate("App");
           } else {
             this.setState({ error: json.msg });
