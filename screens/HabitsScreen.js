@@ -4,6 +4,7 @@ import {
   Alert,
   Button,
   Modal,
+  Platform,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,17 +12,16 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../components/Calendar";
 import HabitsList from "../components/HabitsList";
 import ColorPicker from "../components/ColorPicker";
 
-const URL = "https://habitat-exp.herokuapp.com";
-// const URL = "http://localhost:4000";
+const { URL } = require("../constants");
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
+    title: "Habits",
     // header: null,
   };
 
@@ -242,7 +242,8 @@ const styles = StyleSheet.create({
     borderRadius: 100
   },
   container: {
-    flex: 1
+    flex: 1,
+    marginTop: 5,
   },
   icon: {
     fontSize: 100

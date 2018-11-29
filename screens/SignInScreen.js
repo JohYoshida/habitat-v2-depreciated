@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import base64 from "react-native-base64";
 
-const URL = "https://habitat-exp.herokuapp.com";
+const { URL } = require("../constants");
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
