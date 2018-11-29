@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import HabitsScreen from '../screens/HabitsScreen';
+import CalendarScreen from '../screens/CalendarScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -56,6 +57,7 @@ SettingsStack.navigationOptions = {
 
 const HabitsStack = createStackNavigator({
   Habits: HabitsScreen,
+  Calendar: CalendarScreen,
 });
 
 HabitsStack.navigationOptions = {
