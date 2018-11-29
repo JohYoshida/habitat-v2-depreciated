@@ -29,6 +29,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       userToken: "",
+      authString: "",
       habit: "",
       habitModal: false,
       isGettingHabits: true,
@@ -41,7 +42,7 @@ export default class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._getUserToken().then(() => this._getHabits());
+    this._getAsyncKeys().then(() => this._getHabits());
   }
 
   render() {
@@ -99,22 +100,23 @@ export default class HomeScreen extends React.Component {
     );
   }
 
-  _getUserToken = async() => {
+  _getAsyncKeys = async () => {
     try {
-      await AsyncStorage.getItem("userToken").then(userToken => {
-        this.setState({ userToken });
+      await AsyncStorage.multiGet(["userToken", "authString"]).then(res => {
+        this.setState({ userToken: res[0][1], authString: res[1][1] });
       });
     } catch (err) {
       console.log("Error!", err);
     }
-  }
+  };
 
   _deleteHabit(name) {
     const user_id = this.state.userToken;
-    fetch(URL + "/habits", {
+    fetch(`${URL}/users/${user_id}/habits`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
         "Content-Type": "application/json",
         "Access-Control-Allow-Methods": "DELETE"
       },
@@ -127,7 +129,14 @@ export default class HomeScreen extends React.Component {
 
   _getHabits() {
     this.setState({ isGettingHabits: true });
-    fetch(`${URL}/habits/${this.state.userToken}`)
+    fetch(`${URL}/users/${this.state.userToken}/habits`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
+        "Content-Type": "application/json"
+      }
+    })
       .then(res => res.json())
       .then(json => this.setState({ habits: json, isGettingHabits: false }))
       .catch(err => console.log("Error!", err));
@@ -146,21 +155,29 @@ export default class HomeScreen extends React.Component {
   }
 
   _postHabit() {
-    const colors = ["red", "orange", "yellow", "lime",
-                    "green", "blue", "purple", "indigo"];
+    const colors = [
+      "red",
+      "orange",
+      "yellow",
+      "lime",
+      "green",
+      "blue",
+      "purple",
+      "indigo"
+    ];
     let color;
     if (this.state.newHabitColor === "") {
-      color = colors[Math.floor((Math.random() * 8))];
+      color = colors[Math.floor(Math.random() * 8)];
     } else color = this.state.newHabitColor;
-    fetch(URL + "/habits", {
+    fetch(`${URL}/users/${this.state.userToken}/habits`, {
       method: "POST",
       headers: {
         Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         name: this.state.newHabitName,
-        user_id: this.state.userToken,
         color
       })
     })
@@ -177,7 +194,7 @@ export default class HomeScreen extends React.Component {
       .then(res => res.json())
       .then(json => JSON.parse(json.rows))
       .then(json =>
-        this.setState({ habit, habitModal: true, calendarData: json, })
+        this.setState({ habit, habitModal: true, calendarData: json })
       )
       .catch(err => console.log("Error!", err));
   }
