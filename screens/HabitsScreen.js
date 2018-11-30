@@ -21,7 +21,7 @@ const { URL } = require("../constants");
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: "Habits",
+    title: "Habits"
     // header: null,
   };
 
@@ -34,7 +34,7 @@ export default class HomeScreen extends React.Component {
       newHabitModal: false,
       newHabitName: "",
       newHabitColor: "",
-      habits: [],
+      habits: []
     };
   }
 
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: 5,
+    marginTop: 5
   },
   icon: {
     fontSize: 100

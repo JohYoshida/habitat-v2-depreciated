@@ -44,22 +44,23 @@ class HabitListItem extends PureComponent {
         secondary = "#1A237E";
         break;
       default:
-
     }
     return (
       <TouchableOpacity
         onPress={this._onPress.bind(this, habit)}
         onLongPress={this._onLongPress.bind(this, habit.name)}
       >
-        <View style={{
-          marginLeft: 10,
-          marginRight: 10,
-          padding: 5,
-          borderWidth: 1,
-          borderRadius: 5,
-          backgroundColor: primary,
-          borderColor: secondary
-        }}>
+        <View
+          style={{
+            marginLeft: 10,
+            marginRight: 10,
+            padding: 5,
+            borderWidth: 1,
+            borderRadius: 5,
+            backgroundColor: primary,
+            borderColor: secondary
+          }}
+        >
           <Text style={styles.name}>{habit.name}</Text>
           <Text style={styles.date}>Created at {habit.createdAt}</Text>
         </View>

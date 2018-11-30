@@ -3,12 +3,7 @@
  */
 
 import React from "react";
-import {
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  View
-} from "react-native";
+import { AsyncStorage, StatusBar, StyleSheet, View } from "react-native";
 import LoadingPanel from "../components/LoadingPanel";
 
 export default class AuthLoadingScreen extends React.Component {

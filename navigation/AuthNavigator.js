@@ -7,10 +7,10 @@ import RegisterScreen from "../screens/RegisterScreen";
 
 export default createSwitchNavigator(
   {
-  SignIn: SignInScreen,
-  Register: RegisterScreen,
-},
-{
-  initialRouteName: "SignIn"
-}
+    SignIn: SignInScreen,
+    Register: RegisterScreen
+  },
+  {
+    initialRouteName: "SignIn"
+  }
 );

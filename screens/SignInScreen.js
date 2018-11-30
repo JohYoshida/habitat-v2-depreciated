@@ -65,7 +65,7 @@ export default class SignInScreen extends React.Component {
   _signIn = async () => {
     const { email, password } = this.state;
     const authString = base64.encode(`${email}:${password}`);
-    const auth = "Basic " + authString
+    const auth = "Basic " + authString;
     await fetch(URL + "/users", {
       method: "GET",
       headers: {

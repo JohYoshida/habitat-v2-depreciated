@@ -8,7 +8,7 @@ const { URL } = require("../constants");
 export default class CalendarScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("title", ""),
+      title: navigation.getParam("title", "")
     };
   };
 
@@ -18,7 +18,7 @@ export default class CalendarScreen extends React.Component {
       userToken: "",
       authString: "",
       year: moment().year(),
-      data: {},
+      data: {}
     };
   }
 
@@ -59,13 +59,13 @@ export default class CalendarScreen extends React.Component {
     let data = {};
     try {
       await AsyncStorage.multiGet(["userToken", "authString"]).then(res => {
-        data =  { userToken: res[0][1], authString: res[1][1] };
+        data = { userToken: res[0][1], authString: res[1][1] };
       });
     } catch (err) {
       console.log("Error!", err);
     }
     return data;
-  }
+  };
 
   _onPressDay = (month, day) => {
     const { habit } = this.props.navigation.state.params;
@@ -94,7 +94,5 @@ export default class CalendarScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-
-  },
+  container: {}
 });

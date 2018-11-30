@@ -23,8 +23,8 @@ class Calendar extends React.Component {
         month: "",
         year: "",
         value: "",
-        newValue: "",
-      },
+        newValue: ""
+      }
     };
   }
 
@@ -45,7 +45,7 @@ class Calendar extends React.Component {
               color="black"
             />
           </TouchableOpacity>
-          <Text style={styles.text}>{ year }</Text>
+          <Text style={styles.text}>{year}</Text>
           <TouchableOpacity onPress={this._goForwardYear}>
             <Ionicons
               name={
@@ -72,23 +72,22 @@ class Calendar extends React.Component {
           visible={this.state.editModalVisible}
           onRequestClose={this._hideEditModal}
         >
-        <View style={styles.container}>
-          <Text style={styles.text}>{selectedDay.month} {selectedDay.day}</Text>
-          <TextInput
-            autoFocus={true}
-            placeholder="value"
-            defaultValue={selectedDay.value}
-            onChangeText={newValue => {
-              let { selectedDay } = this.state;
-              selectedDay.newValue = newValue;
-              this.setState({ selectedDay })}
-            }
-          />
-          <Button
-            title="Edit"
-            onPress={this._submitEdit}
-          />
-        </View>
+          <View style={styles.container}>
+            <Text style={styles.text}>
+              {selectedDay.month} {selectedDay.day}
+            </Text>
+            <TextInput
+              autoFocus={true}
+              placeholder="value"
+              defaultValue={selectedDay.value}
+              onChangeText={newValue => {
+                let { selectedDay } = this.state;
+                selectedDay.newValue = newValue;
+                this.setState({ selectedDay });
+              }}
+            />
+            <Button title="Edit" onPress={this._submitEdit} />
+          </View>
         </Modal>
       </ScrollView>
     );
@@ -97,15 +96,15 @@ class Calendar extends React.Component {
   _editDay = (month, day, value) => {
     const selectedDay = { month, day, value };
     this.setState({ editModalVisible: true, selectedDay });
-  }
+  };
 
   _hideEditModal = () => {
     this.setState({ editModalVisible: false });
-  }
+  };
 
   _submitEdit = () => {
     this._hideEditModal();
-  }
+  };
 
   _goBackYear = () => {
     console.log("back");
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 100,
-    alignItems: "center",
+    alignItems: "center"
   },
   header: {
     flex: 1,
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 30,
     marginLeft: 20,
-    marginRight: 20,
+    marginRight: 20
   }
 });
 

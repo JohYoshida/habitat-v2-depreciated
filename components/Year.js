@@ -7,8 +7,7 @@ const { Months } = require("../constants");
 class Year extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   render() {
@@ -16,7 +15,9 @@ class Year extends React.Component {
     const Year = [];
     Months.forEach(month => {
       const Days = [];
-      let daysInMonth = moment().month(month).daysInMonth();
+      let daysInMonth = moment()
+        .month(month)
+        .daysInMonth();
       for (var i = 1; i <= daysInMonth; i++) {
         const key = `${month}-${i}`;
         if (data[key]) {
@@ -24,7 +25,12 @@ class Year extends React.Component {
             <TouchableOpacity
               key={key}
               onPress={this.props.onPress.bind(this, month, i)}
-              onLongPress={this.props.onLongPress.bind(this, month, i, data[key])}
+              onLongPress={this.props.onLongPress.bind(
+                this,
+                month,
+                i,
+                data[key]
+              )}
             >
               <View style={styles.complete}>
                 <Text>{i}</Text>
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 1,
     backgroundColor: "#2196F3"
-  },
+  }
 });
 
 export default Year;

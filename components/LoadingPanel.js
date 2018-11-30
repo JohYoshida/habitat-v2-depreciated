@@ -28,7 +28,7 @@ class LoadingPanel extends Component {
   render() {
     const { loadingAnim, colorAnim } = this.state;
     return (
-      <View style={styles.margin} >
+      <View style={styles.margin}>
         <Animated.View
           style={{
             transform: [
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     height: 150
   },
   margin: {
-    margin: 20,
+    margin: 20
   },
   spacer: {
     height: 100
