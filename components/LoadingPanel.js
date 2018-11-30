@@ -28,33 +28,35 @@ class LoadingPanel extends Component {
   render() {
     const { loadingAnim, colorAnim } = this.state;
     return (
-      <Animated.View
-        style={{
-          transform: [
-            {
-              rotate: loadingAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: ["0deg", "360deg"]
-              })
-            }
-          ]
-        }}
-      >
-        <View style={styles.container}>
-          <Animated.View
-            style={{
-              backgroundColor: colorAnim.interpolate({
-                inputRange: [0, 0.33, 0.66, 1],
-                outputRange: ["#f44336", "#FFEB3B", "#2196F3", "#f44336"]
-              }),
-              borderRadius: 100
-            }}
-          >
-            <View style={styles.ball} />
-          </Animated.View>
-          <View style={styles.spacer} />
-        </View>
-      </Animated.View>
+      <View style={styles.margin} >
+        <Animated.View
+          style={{
+            transform: [
+              {
+                rotate: loadingAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: ["0deg", "360deg"]
+                })
+              }
+            ]
+          }}
+        >
+          <View style={styles.container}>
+            <Animated.View
+              style={{
+                backgroundColor: colorAnim.interpolate({
+                  inputRange: [0, 0.33, 0.66, 1],
+                  outputRange: ["#f44336", "#FFEB3B", "#2196F3", "#f44336"]
+                }),
+                borderRadius: 100
+              }}
+            >
+              <View style={styles.ball} />
+            </Animated.View>
+            <View style={styles.spacer} />
+          </View>
+        </Animated.View>
+      </View>
     );
   }
 }
@@ -65,6 +67,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 100,
     height: 150
+  },
+  margin: {
+    margin: 20,
   },
   spacer: {
     height: 100
