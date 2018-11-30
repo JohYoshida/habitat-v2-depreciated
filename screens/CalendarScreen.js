@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Year from "../components/Year";
+import Calendar from "../components/Calendar";
 
 export default class CalendarScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -20,7 +20,7 @@ export default class CalendarScreen extends React.Component {
     const { habit } = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
-        <Year habit={habit} />
+        <Calendar habit={habit} />
       </View>
     );
   }
