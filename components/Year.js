@@ -94,6 +94,28 @@ class Year extends React.Component {
   };
 
   _postDay = (month, day) => {
+    const { habitID } = this.props;
+    const { data, year, userToken } = this.state;
+    fetch(`${URL}/users/${userToken}/habits/${habitID}/${year}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        day,
+        month,
+        value: 1
+      })
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.data) {
+          data[`${json.data.month}-${json.data.day}`] = json.data.value;
+          this.setState({ data });
+        }
+      })
+      .catch(err => console.log("Error!", err));
   };
 
   _goBackYear = () => {
