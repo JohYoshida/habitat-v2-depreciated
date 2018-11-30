@@ -1,8 +1,17 @@
 import React from "react";
-import { AsyncStorage, ScrollView, StyleSheet, Text, TouchableOpacity,  View } from "react-native";
+import {
+  AsyncStorage,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const moment = require("moment");
-const { URL } = require("../constants");
+const { URL, Months } = require("../constants");
 
 class Year extends React.Component {
   static navigationOptions = {
@@ -38,7 +47,37 @@ class Year extends React.Component {
   }
 
   render() {
+    const { year, data } = this.state;
+    const Calendar = this._makeCalendar(data);
     return (
+      <ScrollView style={styles.container}>
+        <View style={styles.buttons}>
+          <TouchableOpacity onPress={this._goBackYear}>
+            <Ionicons
+              name={
+                Platform.OS === "ios"
+                  ? `ios-arrow-back${focused ? "" : "-outline"}`
+                  : "md-arrow-back"
+              }
+              style={styles.icon}
+              color="black"
+            />
+          </TouchableOpacity>
+          <Text style={styles.text}>{ year }</Text>
+          <TouchableOpacity onPress={this._goForwardYear}>
+            <Ionicons
+              name={
+                Platform.OS === "ios"
+                  ? `ios-arrow-forward${focused ? "" : "-outline"}`
+                  : "md-arrow-forward"
+              }
+              style={styles.icon}
+              color="black"
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.year}>{ Calendar }</View>
+      </ScrollView>
     );
   }
 
@@ -53,7 +92,101 @@ class Year extends React.Component {
     }
     return data;
   };
+
+  _postDay = (month, day) => {
+  };
+
+  _goBackYear = () => {
+    console.log("back");
+  };
+
+  _goForwardYear = () => {
+    console.log("forward");
+  };
+
+  _makeCalendar = (data) => {
+    const Year = [];
+    Months.forEach(month => {
+      const Days = [];
+      let daysInMonth = moment().month(month).daysInMonth();
+      for (var i = 1; i <= daysInMonth; i++) {
+        const key = `${month}-${i}`;
+        if (data[key]) {
+          Days.push(
+            <TouchableOpacity
+              key={key}
+              onPress={this._postDay.bind(this, month, i)}
+            >
+              <View style={styles.complete}>
+                <Text>{i}</Text>
+                <Text>{data[key].value}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        } else {
+          Days.push(
+            <TouchableOpacity
+              key={key}
+              onPress={this._postDay.bind(this, month, i)}
+            >
+              <View style={styles.day}>
+                <Text>{i}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        }
+      }
+      Year.push(
+        <View style={styles.month} key={month}>
+          <Text>{month}</Text>
+          {Days}
+        </View>
+      );
+    });
+    return Year;
+  };
+}
+
 const styles = StyleSheet.create({
+  container: {},
+  buttons: {
+    flex: 1,
+    alignSelf: "center",
+    alignContent: "space-between",
+    flexDirection: "row"
+  },
+  text: {
+    alignSelf: "center",
+    fontSize: 30
+  },
+  year: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 12
+  },
+  month: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start"
+  },
+  day: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1
+  },
+  complete: {
+    flex: 0,
+    borderWidth: 1,
+    height: 40,
+    margin: 1,
+    backgroundColor: "#2196F3"
+  },
+  icon: {
+    fontSize: 36,
+    marginLeft: 20,
+    marginRight: 20,
+  }
 });
 
 export default Year;
