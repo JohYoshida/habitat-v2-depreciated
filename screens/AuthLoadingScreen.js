@@ -4,12 +4,12 @@
 
 import React from "react";
 import {
-  ActivityIndicator,
   AsyncStorage,
   StatusBar,
   StyleSheet,
   View
 } from "react-native";
+import LoadingPanel from "../components/LoadingPanel";
 
 export default class AuthLoadingScreen extends React.Component {
   constructor() {
@@ -30,7 +30,7 @@ export default class AuthLoadingScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
+        <LoadingPanel />
         <StatusBar barStyle="default" />
       </View>
     );
