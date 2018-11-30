@@ -12,22 +12,15 @@ import {
   View
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import Year from "./Year";
 
 const moment = require("moment");
 const { URL, Months } = require("../constants");
 
 class Calendar extends React.Component {
-  static navigationOptions = {
-    // header: null,
-  };
-
   constructor(props) {
     super(props);
     this.state = {
-      userToken: "",
-      authString: "",
-      year: moment().year(),
-      data: {},
       editModalVisible: false,
       selectedDay: {
         day: "",
@@ -39,26 +32,9 @@ class Calendar extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const { habit } = this.props;
-    this._getAsyncKeys().then(res => {
-      const { userToken, authString } = res;
-      let { year, data } = this.state;
-      // Get days associated with habit calendar
-      fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`)
-        .then(res => res.json())
-        .then(json => {
-          json.forEach(row => {
-            data[`${row.month}-${row.day}`] = row.value;
-          });
-          this.setState({ data, userToken, authString });
-        })
-        .catch(err => console.log("Error!", err));
-    });
-  }
-
   render() {
-    const { year, data, selectedDay } = this.state;
+    const { selectedDay } = this.state;
+    const { year, data } = this.props;
     const Calendar = this._makeCalendar(data);
     return (
       <ScrollView>
@@ -117,43 +93,6 @@ class Calendar extends React.Component {
     );
   }
 
-  _getAsyncKeys = async () => {
-    let data = {}
-    try {
-      await AsyncStorage.multiGet(["userToken", "authString"]).then(res => {
-        data =  { userToken: res[0][1], authString: res[1][1] };
-      });
-    } catch (err) {
-      console.log("Error!", err);
-    }
-    return data;
-  };
-
-  _postDay = (month, day) => {
-    const { habit } = this.props;
-    const { data, year, userToken } = this.state;
-    fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        day,
-        month,
-        value: 1
-      })
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (json.data) {
-          data[`${json.data.month}-${json.data.day}`] = json.data.value;
-          this.setState({ data });
-        }
-      })
-      .catch(err => console.log("Error!", err));
-  };
-
   _editDay = (month, day, value) => {
     const selectedDay = { month, day, value };
     this.setState({ editModalVisible: true, selectedDay });
@@ -186,7 +125,7 @@ class Calendar extends React.Component {
           Days.push(
             <TouchableOpacity
               key={key}
-              onPress={this._postDay.bind(this, month, i)}
+              onPress={this.props.onPressDay.bind(this, month, i)}
               onLongPress={this._editDay.bind(this, month, i, data[key])}
             >
               <View style={styles.complete}>
@@ -199,7 +138,7 @@ class Calendar extends React.Component {
           Days.push(
             <TouchableOpacity
               key={key}
-              onPress={this._postDay.bind(this, month, i)}
+              onPress={this.props.onPressDay.bind(this, month, i)}
               onLongPress={this._editDay.bind(this, month, i, 0)}
             >
               <View style={styles.day}>
