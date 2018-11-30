@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  AsyncStorage,
   Button,
   Modal,
   Platform,
@@ -13,9 +12,6 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Year from "./Year";
-
-const moment = require("moment");
-const { URL, Months } = require("../constants");
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -35,7 +31,6 @@ class Calendar extends React.Component {
   render() {
     const { selectedDay } = this.state;
     const { year, data } = this.props;
-    const Calendar = this._makeCalendar(data);
     return (
       <ScrollView>
         <View style={styles.header}>
@@ -64,7 +59,13 @@ class Calendar extends React.Component {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.year}>{ Calendar }</View>
+        <View style={styles.year}>
+          <Year
+            data={data}
+            onPress={this.props.onPressDay}
+            onLongPress={this._editDay}
+          />
+        </View>
 
         <Modal
           animationType="slide"
@@ -113,50 +114,6 @@ class Calendar extends React.Component {
   _goForwardYear = () => {
     console.log("forward");
   };
-
-  _makeCalendar = (data) => {
-    const Year = [];
-    Months.forEach(month => {
-      const Days = [];
-      let daysInMonth = moment().month(month).daysInMonth();
-      for (var i = 1; i <= daysInMonth; i++) {
-        const key = `${month}-${i}`;
-        if (data[key]) {
-          Days.push(
-            <TouchableOpacity
-              key={key}
-              onPress={this.props.onPressDay.bind(this, month, i)}
-              onLongPress={this._editDay.bind(this, month, i, data[key])}
-            >
-              <View style={styles.complete}>
-                <Text>{i}</Text>
-                <Text>{data[key]}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        } else {
-          Days.push(
-            <TouchableOpacity
-              key={key}
-              onPress={this.props.onPressDay.bind(this, month, i)}
-              onLongPress={this._editDay.bind(this, month, i, 0)}
-            >
-              <View style={styles.day}>
-                <Text>{i}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }
-      }
-      Year.push(
-        <View style={styles.month} key={month}>
-          <Text>{month}</Text>
-          {Days}
-        </View>
-      );
-    });
-    return Year;
-  };
 }
 
 const styles = StyleSheet.create({
@@ -179,24 +136,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginTop: 12
-  },
-  month: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start"
-  },
-  day: {
-    flex: 0,
-    borderWidth: 1,
-    height: 40,
-    margin: 1
-  },
-  complete: {
-    flex: 0,
-    borderWidth: 1,
-    height: 40,
-    margin: 1,
-    backgroundColor: "#2196F3"
   },
   icon: {
     fontSize: 30,
