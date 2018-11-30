@@ -41,7 +41,6 @@ class LoadingPanel extends Component {
         }}
       >
         <View style={styles.container}>
-          <View style={styles.spacer} />
           <Animated.View
             style={{
               backgroundColor: colorAnim.interpolate({
@@ -53,6 +52,7 @@ class LoadingPanel extends Component {
           >
             <View style={styles.ball} />
           </Animated.View>
+          <View style={styles.spacer} />
         </View>
       </Animated.View>
     );
