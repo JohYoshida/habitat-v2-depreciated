@@ -18,7 +18,7 @@ export default class CalendarScreen extends React.Component {
     const { habit } = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
-        <Year id={habit.id} />
+        <Year habit={habit} />
       </View>
     );
   }

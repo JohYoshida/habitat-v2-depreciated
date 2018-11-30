@@ -40,12 +40,12 @@ class Year extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props;
+    const { habit } = this.props;
     this._getAsyncKeys().then(res => {
       const { userToken, authString } = res;
       let { year, data } = this.state;
       // Get days associated with habit calendar
-      fetch(`${URL}/users/${userToken}/habits/${id}/${year}`)
+      fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`)
         .then(res => res.json())
         .then(json => {
           json.forEach(row => {
@@ -128,9 +128,9 @@ class Year extends React.Component {
   };
 
   _postDay = (month, day) => {
-    const { id } = this.props;
+    const { habit } = this.props;
     const { data, year, userToken } = this.state;
-    fetch(`${URL}/users/${userToken}/habits/${id}/${year}`, {
+    fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#2196F3"
   },
   icon: {
-    fontSize: 36,
+    fontSize: 30,
     marginLeft: 20,
     marginRight: 20,
   }
