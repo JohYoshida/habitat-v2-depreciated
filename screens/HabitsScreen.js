@@ -56,6 +56,7 @@ export default class HomeScreen extends React.Component {
           <TextInput
             style={styles.textInput}
             autoFocus={true}
+            autoCapitalize="words"
             onChangeText={newHabitName => this.setState({ newHabitName })}
           />
           <ColorPicker pickColor={this._pickColor.bind(this)} />
