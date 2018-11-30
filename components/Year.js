@@ -1,10 +1,13 @@
 import React from "react";
 import {
   AsyncStorage,
+  Button,
+  Modal,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View
 } from "react-native";
@@ -24,7 +27,15 @@ class Year extends React.Component {
       userToken: "",
       authString: "",
       year: moment().year(),
-      data: {}
+      data: {},
+      editModalVisible: false,
+      selectedDay: {
+        day: "",
+        month: "",
+        year: "",
+        value: "",
+        newValue: "",
+      },
     };
   }
 
@@ -47,10 +58,10 @@ class Year extends React.Component {
   }
 
   render() {
-    const { year, data } = this.state;
+    const { year, data, selectedDay } = this.state;
     const Calendar = this._makeCalendar(data);
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView>
         <View style={styles.buttons}>
           <TouchableOpacity onPress={this._goBackYear}>
             <Ionicons
@@ -77,6 +88,29 @@ class Year extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.year}>{ Calendar }</View>
+        <Modal
+          animationType="slide"
+          visible={this.state.editModalVisible}
+          onRequestClose={this._hideEditModal}
+        >
+        <View style={styles.container}>
+          <Text style={styles.text}>{selectedDay.month} {selectedDay.day}</Text>
+          <TextInput
+            autoFocus={true}
+            placeholder="value"
+            defaultValue={selectedDay.value}
+            onChangeText={newValue => {
+              let { selectedDay } = this.state;
+              selectedDay.newValue = newValue;
+              this.setState({ selectedDay })}
+            }
+          />
+          <Button
+            title="Edit"
+            onPress={this._submitEdit}
+          />
+        </View>
+        </Modal>
       </ScrollView>
     );
   }
@@ -118,6 +152,19 @@ class Year extends React.Component {
       .catch(err => console.log("Error!", err));
   };
 
+  _editDay = (month, day, value) => {
+    const selectedDay = { month, day, value };
+    this.setState({ editModalVisible: true, selectedDay });
+  }
+
+  _hideEditModal = () => {
+    this.setState({ editModalVisible: false });
+  }
+
+  _submitEdit = () => {
+    this._hideEditModal();
+  }
+
   _goBackYear = () => {
     console.log("back");
   };
@@ -138,10 +185,11 @@ class Year extends React.Component {
             <TouchableOpacity
               key={key}
               onPress={this._postDay.bind(this, month, i)}
+              onLongPress={this._editDay.bind(this, month, i, data[key])}
             >
               <View style={styles.complete}>
                 <Text>{i}</Text>
-                <Text>{data[key].value}</Text>
+                <Text>{data[key]}</Text>
               </View>
             </TouchableOpacity>
           );
@@ -150,6 +198,7 @@ class Year extends React.Component {
             <TouchableOpacity
               key={key}
               onPress={this._postDay.bind(this, month, i)}
+              onLongPress={this._editDay.bind(this, month, i, 0)}
             >
               <View style={styles.day}>
                 <Text>{i}</Text>
@@ -170,7 +219,11 @@ class Year extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    marginTop: 100,
+    alignItems: "center",
+  },
   buttons: {
     flex: 1,
     alignSelf: "center",
