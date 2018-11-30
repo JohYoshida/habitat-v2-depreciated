@@ -3,9 +3,11 @@ import { StyleSheet, View } from "react-native";
 import Year from "../components/Year";
 
 export default class CalendarScreen extends React.Component {
-  static navigationOptions = {
-    // header: null,
-  }
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam("title", ""),
+    };
+  };
 
   constructor(props) {
     super(props);
