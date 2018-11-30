@@ -30,14 +30,11 @@ export default class HomeScreen extends React.Component {
     this.state = {
       userToken: "",
       authString: "",
-      habit: "",
-      habitModal: false,
       isGettingHabits: true,
       newHabitModal: false,
       newHabitName: "",
       newHabitColor: "",
       habits: [],
-      calendarData: {}
     };
   }
 
@@ -61,18 +58,6 @@ export default class HomeScreen extends React.Component {
           />
           <ColorPicker pickColor={this._pickColor.bind(this)} />
           <Button title="Add Habit" onPress={this._postHabit.bind(this)} />
-        </Modal>
-
-        <Modal
-          animationType="slide"
-          visible={this.state.habitModal}
-          onRequestClose={this._hideCalendar.bind(this)}
-        >
-          <Calendar
-            habit={this.state.habit}
-            data={this.state.calendarData}
-            toggle={this._toggleDay.bind(this)}
-          />
         </Modal>
 
         <HabitsList
@@ -143,10 +128,6 @@ export default class HomeScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   }
 
-  _hideCalendar() {
-    this.setState({ habitModal: false });
-  }
-
   _hideNewHabitModal() {
     this.setState({ newHabitModal: false });
   }
@@ -191,44 +172,11 @@ export default class HomeScreen extends React.Component {
   }
 
   _showCalendar(habit) {
-    fetch(`${URL}/habits/${habit.name}/2018`)
-      .then(res => res.json())
-      .then(json => JSON.parse(json.rows))
-      .then(json =>
-        this.setState({ habit, habitModal: true, calendarData: json })
-      )
-      .catch(err => console.log("Error!", err));
+    this.props.navigation.navigate("Calendar", { habit, title: habit.name });
   }
 
   _showNewHabitModal() {
     this.setState({ newHabitModal: true });
-  }
-
-  _toggleDay(habit, key, bool) {
-    const words = habit.name.split(" ");
-    const habitParam = words.join("%20");
-    fetch(`${URL}/habits/${habitParam}/2018`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        habit: habit.name,
-        day: key,
-        completed: bool
-      })
-    })
-      .then(res => res.json())
-      .then(json => {
-        // TODO: send alert if calendar can't update
-        if (json.msg) {
-          return true;
-        } else {
-          return false;
-        }
-      })
-      .catch(err => console.log("Error!", err));
   }
 }
 
