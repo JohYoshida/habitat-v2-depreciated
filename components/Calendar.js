@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 const moment = require("moment");
 const { URL, Months } = require("../constants");
 
-class Year extends React.Component {
+class Calendar extends React.Component {
   static navigationOptions = {
     // header: null,
   };
@@ -266,4 +266,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Year;
+export default Calendar;
