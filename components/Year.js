@@ -41,6 +41,18 @@ class Year extends React.Component {
     return (
     );
   }
+
+  _getAsyncKeys = async () => {
+    let data = {}
+    try {
+      await AsyncStorage.multiGet(["userToken", "authString"]).then(res => {
+        data =  { userToken: res[0][1], authString: res[1][1] };
+      });
+    } catch (err) {
+      console.log("Error!", err);
+    }
+    return data;
+  };
 const styles = StyleSheet.create({
 });
 
