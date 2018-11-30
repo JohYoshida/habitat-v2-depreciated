@@ -62,7 +62,7 @@ class Year extends React.Component {
     const Calendar = this._makeCalendar(data);
     return (
       <ScrollView>
-        <View style={styles.buttons}>
+        <View style={styles.header}>
           <TouchableOpacity onPress={this._goBackYear}>
             <Ionicons
               name={
@@ -87,7 +87,9 @@ class Year extends React.Component {
             />
           </TouchableOpacity>
         </View>
+
         <View style={styles.year}>{ Calendar }</View>
+
         <Modal
           animationType="slide"
           visible={this.state.editModalVisible}
@@ -224,7 +226,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     alignItems: "center",
   },
-  buttons: {
+  header: {
     flex: 1,
     alignSelf: "center",
     alignContent: "space-between",
