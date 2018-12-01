@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const moment = require("moment");
-const { Months } = require("../constants");
+const { Months } = require("../constants/Constants");
 
 class Year extends React.Component {
   constructor(props) {

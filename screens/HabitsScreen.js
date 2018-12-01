@@ -17,7 +17,7 @@ import Calendar from "../components/Calendar";
 import HabitsList from "../components/HabitsList";
 import ColorPicker from "../components/ColorPicker";
 
-const { URL } = require("../constants");
+const { URL } = require("../constants/Constants");
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {

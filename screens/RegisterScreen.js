@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import base64 from "react-native-base64";
 
-const { URL } = require("../constants");
+const { URL } = require("../constants/Constants");
 
 export default class RegisterScreen extends React.Component {
   static navigationOptions = {

@@ -3,7 +3,7 @@ import { AsyncStorage, StyleSheet, View } from "react-native";
 import Calendar from "../components/Calendar";
 
 const moment = require("moment");
-const { URL } = require("../constants");
+const { URL } = require("../constants/Constants");
 
 export default class CalendarScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
