@@ -105,14 +105,14 @@ class Calendar extends React.Component {
     const { habit_id, month, day } = this.state.selectedDay;
     this.props.onPressDelete(habit_id, month, day);
     this._hideEditModal();
-  }
+  };
 
   _hideEditModal = () => {
     this.setState({ editModalVisible: false });
   };
 
   _submitEdit = () => {
-    this.props.onPressSubmitEdits(this.state.selectedDay)
+    this.props.onPressSubmitEdits(this.state.selectedDay);
     this._hideEditModal();
   };
 

@@ -31,7 +31,7 @@ class Year extends React.Component {
                 i,
                 data[key].value,
                 data[key].id,
-                data[key].habit_id,
+                data[key].habit_id
               )}
             >
               <View style={styles.complete}>

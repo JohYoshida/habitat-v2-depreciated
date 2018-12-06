@@ -62,21 +62,20 @@ export default class CalendarScreen extends React.Component {
       let { year, data } = this.state;
       // Get days associated with habit calendar
       fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`)
-      .then(res => res.json())
-      .then(json => {
-        json.forEach(row => {
-          data[`${row.month}-${row.day}`] = {
-            id: row.id,
-            habit_id: row.habit_id,
-            value: row.value,
-          };
-        });
-        this.setState({ userToken, authString, data });
-      })
-      .catch(err => console.log("Error!", err));
+        .then(res => res.json())
+        .then(json => {
+          json.forEach(row => {
+            data[`${row.month}-${row.day}`] = {
+              id: row.id,
+              habit_id: row.habit_id,
+              value: row.value
+            };
+          });
+          this.setState({ userToken, authString, data });
+        })
+        .catch(err => console.log("Error!", err));
     });
-
-  }
+  };
 
   _onPressDay = (month, day) => {
     const { habit } = this.props.navigation.state.params;
@@ -103,43 +102,49 @@ export default class CalendarScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   };
 
-  _onPressSubmitEdits = (newData) => {
+  _onPressSubmitEdits = newData => {
     const { userToken, year } = this.state;
     const { habit_id, month, day, newValue } = newData;
-    fetch(`${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ newValue })
-    })
-      .then((res) => {
+    fetch(
+      `${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ newValue })
+      }
+    )
+      .then(res => {
         console.log(res.json());
         let { data } = this.state;
         data[`${month}-${day}`].value = newValue;
         this.setState({ data });
       })
-      .catch(err => console.log(error))
-  }
+      .catch(err => console.log(error));
+  };
 
   _onPressDelete = (habit_id, month, day) => {
-    const { userToken, year } = this.state
-    fetch(`${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Methods": "DELETE"
-      },
-    })
+    const { userToken, year } = this.state;
+    fetch(
+      `${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`,
+      {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Methods": "DELETE"
+        }
+      }
+    )
       .then(() => {
         let { data } = this.state;
         delete data[`${month}-${day}`];
         this.setState({ data });
       })
-      .catch(err => console.log(error))
-  }
+      .catch(err => console.log(error));
+  };
 }
 
 const styles = StyleSheet.create({
