@@ -79,7 +79,7 @@ class Calendar extends React.Component {
             <TextInput
               autoFocus={true}
               placeholder="value"
-              defaultValue={selectedDay.value}
+              defaultValue={selectedDay.value ? selecteDay.value : ""}
               onChangeText={newValue => {
                 let { selectedDay } = this.state;
                 selectedDay.newValue = newValue;
@@ -94,7 +94,7 @@ class Calendar extends React.Component {
     );
   }
 
-  _editDay = (id, habit_id, month, day, value) => {
+  _editDay = (month, day, value, id, habit_id) => {
     const { year } = this.props;
     const { newValue } = this.state.selectedDay;
     const selectedDay = { id, habit_id, year, month, day, value, newValue };

@@ -27,11 +27,11 @@ class Year extends React.Component {
               onPress={this.props.onPress.bind(this, month, i)}
               onLongPress={this.props.onLongPress.bind(
                 this,
-                data[key].id,
-                data[key].habit_id,
                 month,
                 i,
                 data[key].value,
+                data[key].id,
+                data[key].habit_id,
               )}
             >
               <View style={styles.complete}>
