@@ -71,7 +71,6 @@ export default class CalendarScreen extends React.Component {
             value: row.value,
           };
         });
-        console.log(data);
         this.setState({ userToken, authString, data });
       })
       .catch(err => console.log("Error!", err));
@@ -105,24 +104,13 @@ export default class CalendarScreen extends React.Component {
   };
 
   _onPressSubmitEdits = (newData) => {
-    // const { data, year } = this.state;
-    // let day = {
-    //   id: newData.id,
-    //   habit_id: newData.habit_id,
-    //   day: newData.day,
-    //   month: newData.month,
-    //   year,
-    //   value: newData.newValue,
-    // };
     const { userToken, year } = this.state;
-    const { habit_id, month, day, value, newValue } = newData;
-    console.log(value, newValue);
+    const { habit_id, month, day, newValue } = newData;
     fetch(`${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        // "Access-Control-Allow-Methods": "POST"
       },
       body: JSON.stringify({ newValue })
     })
