@@ -23,21 +23,7 @@ export default class CalendarScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { habit } = this.props.navigation.state.params;
-    this._getAsyncKeys().then(res => {
-      const { userToken, authString } = res;
-      let { year, data } = this.state;
-      // Get days associated with habit calendar
-      fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`)
-        .then(res => res.json())
-        .then(json => {
-          json.forEach(row => {
-            data[`${row.month}-${row.day}`] = row.value;
-          });
-          this.setState({ userToken, authString, data });
-        })
-        .catch(err => console.log("Error!", err));
-    });
+    this._fetchData();
   }
 
   render() {
@@ -50,6 +36,8 @@ export default class CalendarScreen extends React.Component {
           year={year}
           data={data}
           onPressDay={this._onPressDay}
+          onPressSubmitEdits={this._onPressSubmitEdits}
+          onPressDelete={this._onPressDelete}
         />
       </View>
     );
@@ -66,6 +54,30 @@ export default class CalendarScreen extends React.Component {
     }
     return data;
   };
+
+  _fetchData = () => {
+    const { habit } = this.props.navigation.state.params;
+    this._getAsyncKeys().then(res => {
+      const { userToken, authString } = res;
+      let { year, data } = this.state;
+      // Get days associated with habit calendar
+      fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`)
+      .then(res => res.json())
+      .then(json => {
+        json.forEach(row => {
+          data[`${row.month}-${row.day}`] = {
+            id: row.id,
+            habit_id: row.habit_id,
+            value: row.value,
+          };
+        });
+        console.log(data);
+        this.setState({ userToken, authString, data });
+      })
+      .catch(err => console.log("Error!", err));
+    });
+
+  }
 
   _onPressDay = (month, day) => {
     const { habit } = this.props.navigation.state.params;
@@ -85,12 +97,61 @@ export default class CalendarScreen extends React.Component {
       .then(res => res.json())
       .then(json => {
         if (json.data) {
-          data[`${json.data.month}-${json.data.day}`] = json.data.value;
+          data[`${json.data.month}-${json.data.day}`] = json.data;
           this.setState({ data });
         }
       })
       .catch(err => console.log("Error!", err));
   };
+
+  _onPressSubmitEdits = (newData) => {
+    // const { data, year } = this.state;
+    // let day = {
+    //   id: newData.id,
+    //   habit_id: newData.habit_id,
+    //   day: newData.day,
+    //   month: newData.month,
+    //   year,
+    //   value: newData.newValue,
+    // };
+    const { userToken, year } = this.state;
+    const { habit_id, month, day, value, newValue } = newData;
+    console.log(value, newValue);
+    fetch(`${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        // "Access-Control-Allow-Methods": "POST"
+      },
+      body: JSON.stringify({ newValue })
+    })
+      .then((res) => {
+        console.log(res.json());
+        let { data } = this.state;
+        data[`${month}-${day}`].value = newValue;
+        this.setState({ data });
+      })
+      .catch(err => console.log(error))
+  }
+
+  _onPressDelete = (habit_id, month, day) => {
+    const { userToken, year } = this.state
+    fetch(`${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Methods": "DELETE"
+      },
+    })
+      .then(() => {
+        let { data } = this.state;
+        delete data[`${month}-${day}`];
+        this.setState({ data });
+      })
+      .catch(err => console.log(error))
+  }
 }
 
 const styles = StyleSheet.create({

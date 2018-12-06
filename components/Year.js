@@ -27,14 +27,16 @@ class Year extends React.Component {
               onPress={this.props.onPress.bind(this, month, i)}
               onLongPress={this.props.onLongPress.bind(
                 this,
+                data[key].id,
+                data[key].habit_id,
                 month,
                 i,
-                data[key]
+                data[key].value,
               )}
             >
               <View style={styles.complete}>
                 <Text>{i}</Text>
-                <Text>{data[key]}</Text>
+                <Text>{data[key].value}</Text>
               </View>
             </TouchableOpacity>
           );

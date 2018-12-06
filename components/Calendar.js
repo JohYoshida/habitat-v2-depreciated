@@ -87,22 +87,32 @@ class Calendar extends React.Component {
               }}
             />
             <Button title="Edit" onPress={this._submitEdit} />
+            <Button title="Delete" onPress={this._deleteDay} />
           </View>
         </Modal>
       </ScrollView>
     );
   }
 
-  _editDay = (month, day, value) => {
-    const selectedDay = { month, day, value };
+  _editDay = (id, habit_id, month, day, value) => {
+    const { year } = this.props;
+    const { newValue } = this.state.selectedDay;
+    const selectedDay = { id, habit_id, year, month, day, value, newValue };
     this.setState({ editModalVisible: true, selectedDay });
   };
+
+  _deleteDay = () => {
+    const { habit_id, month, day } = this.state.selectedDay;
+    this.props.onPressDelete(habit_id, month, day);
+    this._hideEditModal();
+  }
 
   _hideEditModal = () => {
     this.setState({ editModalVisible: false });
   };
 
   _submitEdit = () => {
+    this.props.onPressSubmitEdits(this.state.selectedDay)
     this._hideEditModal();
   };
 
