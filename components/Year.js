@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import Colors from "../constants/Colors";
 const moment = require("moment");
 const { Months } = require("../constants/Constants");
 
@@ -11,7 +12,8 @@ class Year extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, habit } = this.props;
+    console.log(habit);
     const Year = [];
     Months.forEach(month => {
       const Days = [];
@@ -34,9 +36,11 @@ class Year extends React.Component {
                 data[key].habit_id
               )}
             >
-              <View style={styles.complete}>
-                <Text>{i}</Text>
-                <Text>{data[key].value}</Text>
+              <View style={styles.day}>
+                <View style={styles[`${habit.color}Primary`]}>
+                  <Text>{i}</Text>
+                  <Text>{data[key].value}</Text>
+                </View>
               </View>
             </TouchableOpacity>
           );
@@ -48,7 +52,9 @@ class Year extends React.Component {
               onLongPress={this.props.onLongPress.bind(this, month, i, 0)}
             >
               <View style={styles.day}>
-                <Text>{i}</Text>
+                <View style={styles[`${habit.color}Muted`]}>
+                  <Text>{i}</Text>
+                </View>
               </View>
             </TouchableOpacity>
           );
@@ -77,13 +83,70 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 1
   },
-  complete: {
-    flex: 0,
-    borderWidth: 1,
-    height: 40,
-    margin: 1,
-    backgroundColor: "#2196F3"
-  }
+  redPrimary: {
+    flex: 1,
+    backgroundColor: Colors.redPrimary
+  },
+  orangePrimary: {
+    flex: 1,
+    backgroundColor: Colors.orangePrimary
+  },
+  yellowPrimary: {
+    flex: 1,
+    backgroundColor: Colors.yellowPrimary
+  },
+  limePrimary: {
+    flex: 1,
+    backgroundColor: Colors.limePrimary
+  },
+  greenPrimary: {
+    flex: 1,
+    backgroundColor: Colors.greenPrimary
+  },
+  bluePrimary: {
+    flex: 1,
+    backgroundColor: Colors.bluePrimary
+  },
+  purplePrimary: {
+    flex: 1,
+    backgroundColor: Colors.purplePrimary
+  },
+  indigoPrimary: {
+    flex: 1,
+    backgroundColor: Colors.indigoPrimary
+  },
+  redMuted: {
+    flex: 1,
+    backgroundColor: Colors.redMuted
+  },
+  orangeMuted: {
+    flex: 1,
+    backgroundColor: Colors.orangeMuted
+  },
+  yellowMuted: {
+    flex: 1,
+    backgroundColor: Colors.yellowMuted
+  },
+  limeMuted: {
+    flex: 1,
+    backgroundColor: Colors.limeMuted
+  },
+  greenMuted: {
+    flex: 1,
+    backgroundColor: Colors.greenMuted
+  },
+  blueMuted: {
+    flex: 1,
+    backgroundColor: Colors.blueMuted
+  },
+  purpleMuted: {
+    flex: 1,
+    backgroundColor: Colors.purpleMuted
+  },
+  indigoMuted: {
+    flex: 1,
+    backgroundColor: Colors.indigoMuted
+  },
 });
 
 export default Year;

@@ -30,7 +30,7 @@ class Calendar extends React.Component {
 
   render() {
     const { selectedDay } = this.state;
-    const { year, data } = this.props;
+    const { year, data, habit } = this.props;
     return (
       <ScrollView>
         <View style={styles.header}>
@@ -61,6 +61,7 @@ class Calendar extends React.Component {
 
         <View style={styles.year}>
           <Year
+            habit={habit}
             data={data}
             onPress={this.props.onPressDay}
             onLongPress={this._editDay}

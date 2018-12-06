@@ -60,7 +60,7 @@ export default class CalendarScreen extends React.Component {
     this._getAsyncKeys().then(res => {
       const { userToken, authString } = res;
       let { year, data } = this.state;
-      // Get days associated with habit calendar
+      // Get days associated with habit
       fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`)
         .then(res => res.json())
         .then(json => {
