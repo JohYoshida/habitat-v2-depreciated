@@ -7,13 +7,13 @@ class HabitsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRefreshing: false,
+      isRefreshing: false
     };
   }
 
   render() {
     if (this.props.isLoading) {
-      return <LoadingPanel />
+      return <LoadingPanel />;
     } else {
       return (
         <FlatList
@@ -32,7 +32,7 @@ class HabitsList extends Component {
   _handleRefresh() {
     this.setState({ isRefreshing: true }, () => {
       this.props.onRefresh();
-      this.setState({ isRefreshing: false })
+      this.setState({ isRefreshing: false });
     });
   }
 
@@ -49,7 +49,7 @@ class HabitsList extends Component {
 
   _renderSeparator = () => {
     return <View style={styles.separator} />;
-  }
+  };
 
   _renderEmpty = () => {
     return (
@@ -57,17 +57,17 @@ class HabitsList extends Component {
         <Text>Habits you add will appear here.</Text>
       </View>
     );
-  }
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignSelf: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   separator: {
-    height: 5,
+    height: 5
   }
 });
 

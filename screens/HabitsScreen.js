@@ -110,7 +110,7 @@ export default class HomeScreen extends React.Component {
     })
       .then(res => res.json())
       .then(json => {
-        this._getHabits()
+        this._getHabits();
       })
       .catch(err => console.log("Error!", err));
   }
