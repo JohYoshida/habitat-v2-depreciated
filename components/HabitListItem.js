@@ -48,7 +48,7 @@ class HabitListItem extends PureComponent {
     return (
       <TouchableOpacity
         onPress={this._onPress.bind(this, habit)}
-        onLongPress={this._onLongPress.bind(this, habit.name)}
+        onLongPress={this._onLongPress.bind(this, habit.name, habit.id)}
       >
         <View
           style={{
@@ -72,7 +72,7 @@ class HabitListItem extends PureComponent {
     this.props.onPress(habit);
   }
 
-  _onLongPress(name) {
+  _onLongPress(name, habit_id) {
     Alert.alert("Delete habit", "Are you sure you want to delete this habit?", [
       {
         text: "Cancel",
@@ -82,7 +82,7 @@ class HabitListItem extends PureComponent {
       {
         text: "OK",
         onPress: () => {
-          this.props.onLongPress(name);
+          this.props.onLongPress(name, habit_id);
         }
       }
     ]);

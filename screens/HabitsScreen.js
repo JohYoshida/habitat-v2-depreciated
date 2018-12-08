@@ -96,7 +96,7 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  _deleteHabit(name) {
+  _deleteHabit(name, habit_id) {
     const user_id = this.state.userToken;
     fetch(`${URL}/users/${user_id}/habits`, {
       method: "DELETE",
@@ -106,10 +106,12 @@ export default class HomeScreen extends React.Component {
         "Content-Type": "application/json",
         "Access-Control-Allow-Methods": "DELETE"
       },
-      body: JSON.stringify({ user_id, name })
+      body: JSON.stringify({ name, habit_id })
     })
       .then(res => res.json())
-      .then(json => this._getHabits())
+      .then(json => {
+        this._getHabits()
+      })
       .catch(err => console.log("Error!", err));
   }
 
