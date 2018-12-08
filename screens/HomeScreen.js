@@ -22,12 +22,13 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userToken: ""
+      userToken: "",
+      username: "",
     };
   }
 
   componentDidMount() {
-    this._getUserToken();
+    this._getUserData();
   }
 
   render() {
@@ -61,7 +62,7 @@ export default class HomeScreen extends React.Component {
               </MonoText>
             </View>
 
-            <Text style={styles.getStartedText}>{this.state.userToken}</Text>
+            <Text style={styles.getStartedText}>{this.state.username}</Text>
           </View>
 
           <View style={styles.helpContainer}>
@@ -88,10 +89,16 @@ export default class HomeScreen extends React.Component {
     );
   }
 
-  _getUserToken = async () => {
-    await AsyncStorage.getItem("userToken").then(userToken => {
-      this.setState({ userToken });
-    });
+  _getUserData = async () => {
+    try {
+      await AsyncStorage.multiGet(["userToken", "username"]).then(res => {
+        const userToken = res[0][1];
+        const username = res[1][1];
+        this.setState({ userToken, username });
+      });
+    } catch (err) {
+      console.log("Error!", err);
+    }
   };
 
   _logout = async () => {

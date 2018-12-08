@@ -79,6 +79,7 @@ export default class SignInScreen extends React.Component {
         console.log(json);
         if (json.verified) {
           AsyncStorage.setItem("userToken", json.id);
+          AsyncStorage.setItem("username", email);
           AsyncStorage.setItem("authString", authString);
           this.props.navigation.navigate("App");
         } else {
