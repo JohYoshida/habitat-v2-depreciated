@@ -34,7 +34,7 @@ class Calendar extends React.Component {
     return (
       <ScrollView>
         <View style={styles.header}>
-          <TouchableOpacity onPress={this._goBackYear}>
+          <TouchableOpacity onPress={this.props.goBackYear}>
             <Ionicons
               name={
                 Platform.OS === "ios"
@@ -46,7 +46,7 @@ class Calendar extends React.Component {
             />
           </TouchableOpacity>
           <Text style={styles.text}>{year}</Text>
-          <TouchableOpacity onPress={this._goForwardYear}>
+          <TouchableOpacity onPress={this.props.goForwardYear}>
             <Ionicons
               name={
                 Platform.OS === "ios"

@@ -38,6 +38,8 @@ export default class CalendarScreen extends React.Component {
           onPressDay={this._onPressDay}
           onPressSubmitEdits={this._onPressSubmitEdits}
           onPressDelete={this._onPressDelete}
+          goForwardYear={this._goForwardYear}
+          goBackYear={this._goBackYear}
         />
       </View>
     );
@@ -53,6 +55,22 @@ export default class CalendarScreen extends React.Component {
       console.log("Error!", err);
     }
     return data;
+  };
+
+  _goForwardYear = () => {
+    let { year } = this.state;
+    let data = {};
+    year++;
+    this.setState({ year, data });
+    this._fetchData();
+  };
+
+  _goBackYear = () => {
+    let { year } = this.state;
+    let data = {};
+    year--;
+    this.setState({ year, data });
+    this._fetchData();
   };
 
   _fetchData = () => {
@@ -117,7 +135,7 @@ export default class CalendarScreen extends React.Component {
       }
     )
       .then(res => {
-        console.log(res.json());
+        // console.log(res.json());
         let { data } = this.state;
         data[`${month}-${day}`].value = newValue;
         this.setState({ data });
