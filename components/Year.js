@@ -13,7 +13,6 @@ class Year extends React.Component {
 
   render() {
     const { data, habit } = this.props;
-    console.log(habit);
     const Year = [];
     Months.forEach(month => {
       const Days = [];
