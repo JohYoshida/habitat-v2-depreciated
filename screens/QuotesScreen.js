@@ -12,7 +12,7 @@ import QuoteDisplay from "../components/QuoteDisplay";
 
 const { URL } = require("../constants/Constants");
 
-export default class HomeScreen extends React.Component {
+export default class QuotesScreen extends React.Component {
   static navigationOptions = {
     title: "Quotes"
     // header: null,
