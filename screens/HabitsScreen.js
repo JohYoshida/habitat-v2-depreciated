@@ -60,28 +60,33 @@ export default class HomeScreen extends React.Component {
           <Button title="Add Habit" onPress={this._postHabit.bind(this)} />
         </Modal>
 
-        <HabitsList
-          isLoading={this.state.isGettingHabits}
-          habits={this.state.habits}
-          onPress={this._showCalendar.bind(this)}
-          onLongPress={this._deleteHabit.bind(this)}
-          onRefresh={this._getHabits.bind(this)}
-        />
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={this._showNewHabitModal.bind(this)}
-        >
-          <Ionicons
-            style={styles.icon}
-            name={
-              Platform.OS === "ios"
-                ? `ios-add${focused ? "" : "-outline"}`
-                : "md-add"
-            }
-            color="white"
-          />
-        </TouchableOpacity>
+        <View style={styles.top}>
+          <HabitsList
+            isLoading={this.state.isGettingHabits}
+            habits={this.state.habits}
+            onPress={this._showCalendar.bind(this)}
+            onLongPress={this._deleteHabit.bind(this)}
+            onRefresh={this._getHabits.bind(this)}
+            />
+        </View>
+        <View style={styles.bottom}>
+          <View style={styles.buttons}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={this._showNewHabitModal.bind(this)}
+              >
+              <Ionicons
+                style={styles.icon}
+                name={
+                  Platform.OS === "ios"
+                  ? `ios-add${focused ? "" : "-outline"}`
+                  : "md-add"
+                }
+                color="white"
+                />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
@@ -186,18 +191,23 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     padding: 20,
-    margin: 30,
-    marginLeft: 110,
-    marginRight: 110,
+    margin: 5,
     backgroundColor: "#2196F3",
     borderRadius: 100
+  },
+  buttons: {
+    position: "absolute",
+    alignSelf: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
   container: {
     flex: 1,
     marginTop: 5
   },
   icon: {
-    fontSize: 100
+    fontSize: 100,
+    paddingHorizontal: 20,
   },
   textInput: {
     marginTop: 50,
@@ -205,5 +215,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     fontSize: 20,
     alignSelf: "center"
+  },
+  top: {
+    flex: 2,
+    marginBottom: 10,
+  },
+  bottom: {
+    flex: 1,
   }
 });
