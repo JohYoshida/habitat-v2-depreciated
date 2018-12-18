@@ -1,5 +1,9 @@
 import React from "react";
 import {
+  AsyncStorage,
+  Platform,
+  Text,
+  TouchableOpacity,
   StyleSheet,
   View
 } from "react-native";
@@ -16,14 +20,66 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userToken: "",
+      authString: "",
+      isGettingQuotes: true,
+      quotes: [],
+      quote: "",
     };
+  }
+
+  componentDidMount() {
+    this._getAsyncKeys().then(() => this._getQuotes())
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Text>{this.state.quote}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this._showQuote}
+        >
+          <Ionicons
+            style={styles.icon}
+            name={
+              Platform.OS === "ios"
+                ? `ios-egg${focused ? "" : "-outline"}`
+                : "md-egg"
+            }
+            color="white"
+          />
+        </TouchableOpacity>
       </View>
     );
+  }
+
+  _getAsyncKeys = async () => {
+    try {
+      await AsyncStorage.multiGet(["userToken", "authString"]).then(res => {
+        this.setState({ userToken: res[0][1], authString: res[1][1] });
+      });
+    } catch (err) {
+      console.log("Error!", err);
+    }
+  };
+
+  _getQuotes = () => {
+    this.setState({ isGettingQuotes: true });
+    fetch(`${URL}/quotes/${this.state.userToken}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(json => this.setState({ quotes: json, isGettingQuotes: false }))
+      .catch(err => console.log("Error!", err));
+  }
+
+  _showQuote = () => {
   }
 }
 
