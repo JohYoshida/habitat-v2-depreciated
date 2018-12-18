@@ -8,6 +8,7 @@ import {
   View
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import QuoteDisplay from "../components/QuoteDisplay";
 
 const { URL } = require("../constants/Constants");
 
@@ -24,32 +25,84 @@ export default class HomeScreen extends React.Component {
       authString: "",
       isGettingQuotes: true,
       quotes: [],
-      quote: "",
+      quote: {},
     };
   }
 
   componentDidMount() {
-    this._getAsyncKeys().then(() => this._getQuotes())
+    this._getAsyncKeys().then(() => {
+      this._getQuotes().then(() => {
+        this._showQuote();
+      })
+    })
   }
 
   render() {
+
+    const AddButton = (
+      <TouchableOpacity
+        style={styles.button}
+        onPress={this._showQuote}
+        >
+        <Ionicons
+          style={styles.add}
+          name={
+            Platform.OS === "ios"
+            ? `ios-add${focused ? "" : "-outline"}`
+            : "md-add"
+          }
+          color="white"
+          />
+      </TouchableOpacity>
+    );
+    const EggButton = (
+      <TouchableOpacity
+        style={styles.button}
+        onPress={this._showQuote}
+        >
+        <Ionicons
+          style={styles.egg}
+          name={
+            Platform.OS === "ios"
+            ? `ios-egg${focused ? "" : "-outline"}`
+            : "md-egg"
+          }
+          color="white"
+          />
+      </TouchableOpacity>
+    );
+    const ListButton = (
+      <TouchableOpacity
+        style={styles.button}
+        onPress={this._showQuote}
+        >
+        <Ionicons
+          style={styles.list}
+          name={
+            Platform.OS === "ios"
+            ? `ios-list${focused ? "" : "-outline"}`
+            : "md-list"
+          }
+          color="white"
+          />
+      </TouchableOpacity>
+    );
+
     return (
       <View style={styles.container}>
-        <Text>{this.state.quote}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={this._showQuote}
-        >
-          <Ionicons
-            style={styles.icon}
-            name={
-              Platform.OS === "ios"
-                ? `ios-egg${focused ? "" : "-outline"}`
-                : "md-egg"
-            }
-            color="white"
+      <View style={styles.top}>
+        <QuoteDisplay
+          isLoading={this.state.isGettingQuotes}
+          quote={this.state.quote}
           />
-        </TouchableOpacity>
+      </View>
+      <View style={styles.bottom}>
+          <View style={styles.buttons}>
+            {AddButton}
+            {EggButton}
+            {ListButton}
+          </View>
+        </View>
       </View>
     );
   }
@@ -66,20 +119,31 @@ export default class HomeScreen extends React.Component {
 
   _getQuotes = () => {
     this.setState({ isGettingQuotes: true });
-    fetch(`${URL}/quotes/${this.state.userToken}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Basic " + this.state.authString,
-        "Content-Type": "application/json"
-      }
-    })
+    return new Promise((resolve, reject) => {
+      fetch(`${URL}/quotes/${this.state.userToken}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: "Basic " + this.state.authString,
+          "Content-Type": "application/json"
+        }
+      })
       .then(res => res.json())
-      .then(json => this.setState({ quotes: json, isGettingQuotes: false }))
-      .catch(err => console.log("Error!", err));
+      .then(json => {
+        this.setState({ quotes: json, isGettingQuotes: false })
+        resolve();
+      })
+      .catch(err => {
+        console.log("Error!", err)
+        reject();
+      });
+    })
   }
 
   _showQuote = () => {
+    const { quotes } = this.state;
+    const random = Math.floor(Math.random() * quotes.length);
+    this.setState({ quote: quotes[random]});
   }
 }
 
@@ -87,18 +151,28 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     padding: 20,
-    margin: 30,
-    marginLeft: 110,
-    marginRight: 110,
+    margin: 5,
     backgroundColor: "#2196F3",
     borderRadius: 100
+  },
+  buttons: {
+    position: "absolute",
+    alignSelf: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
   container: {
     flex: 1,
     marginTop: 5
   },
-  icon: {
-    fontSize: 100
+  egg: {
+    fontSize: 50
+  },
+  add: {
+    fontSize: 30,
+  },
+  list: {
+    fontSize: 30,
   },
   textInput: {
     marginTop: 50,
@@ -106,5 +180,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     fontSize: 20,
     alignSelf: "center"
+  },
+  top: {
+    flex: 3,
+    marginBottom: 10,
+  },
+  bottom: {
+    flex: 1,
   }
 });
