@@ -112,9 +112,9 @@ QuotesStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
   // LinksStack,
   // SettingsStack,
+  QuotesStack,
   HabitsStack,
-  QuotesStack
+  HomeStack,
 });
