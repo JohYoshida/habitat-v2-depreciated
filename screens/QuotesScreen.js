@@ -118,23 +118,54 @@ export default class QuotesScreen extends React.Component {
           "Content-Type": "application/json"
         }
       })
+        .then(res => res.json())
+        .then(quotes => {
+          this.setState({ quotes, isGettingQuotes: false });
+          resolve();
+        })
+        .catch(err => {
+          console.log("Error!", err);
+          reject();
+        });
+    });
+  };
+
+  _postQuote = quote => {
+    const { text, author, source } = quote;
+    fetch(`${URL}/quotes/${this.state.userToken}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text, author, source })
+    })
       .then(res => res.json())
       .then(json => {
-        this.setState({ quotes: json, isGettingQuotes: false })
-        resolve();
+        this._getQuotes();
       })
-      .catch(err => {
-        console.log("Error!", err)
-        reject();
-      });
-    })
-  }
+      .catch(err => console.log("Error!", err));
+  };
+
+  _addQuote = () => {
+    this.props.navigation.navigate("AddQuote", { postQuote: this._postQuote });
+  };
 
   _showQuote = () => {
     const { quotes } = this.state;
     const random = Math.floor(Math.random() * quotes.length);
-    this.setState({ quote: quotes[random]});
-  }
+    this.setState({ quote: quotes[random] });
+  };
+
+  _viewQuotes = () => {
+    const { quotes, isGettingQuotes } = this.state;
+    this.props.navigation.navigate("ViewQuotes", {
+      isGettingQuotes,
+      quotes,
+      refresh: this._getQuotes.bind(this)
+    });
+  };
 }
 
 const styles = StyleSheet.create({

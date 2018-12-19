@@ -2,6 +2,7 @@ import React from "react";
 import { Platform } from "react-native";
 import {
   createStackNavigator,
+  createSwitchNavigator,
   createBottomTabNavigator
 } from "react-navigation";
 
@@ -9,8 +10,13 @@ import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+
 import HabitsScreen from "../screens/HabitsScreen";
 import CalendarScreen from "../screens/CalendarScreen";
+
+import QuotesScreen from "../screens/QuotesScreen";
+import ViewQuotesScreen from "../screens/ViewQuotesScreen";
+import AddQuoteScreen from "../screens/AddQuoteScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -85,9 +91,28 @@ HabitsStack.navigationOptions = {
   )
 };
 
+const QuotesStack = createStackNavigator({
+  Quotes: QuotesScreen,
+  ViewQuotes: ViewQuotesScreen,
+  AddQuote: AddQuoteScreen
+});
+
+QuotesStack.navigationOptions = {
+  tabBarLabel: "Quotes",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === "ios" ? `ios-egg${focused ? "" : "-outline"}` : "md-egg"
+      }
+    />
+  )
+};
+
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
-  HabitsStack
+  // LinksStack,
+  // SettingsStack,
+  HabitsStack,
+  QuotesStack
 });
