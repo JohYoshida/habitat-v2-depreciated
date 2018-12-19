@@ -8,6 +8,7 @@ import {
   View
 } from "react-native";
 import base64 from "react-native-base64";
+import LoadingPanel from "../components/LoadingPanel";
 
 const { URL } = require("../constants/Constants");
 
@@ -19,6 +20,7 @@ export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isWaiting: false,
       email: null,
       password: null,
       error: ""
@@ -29,41 +31,47 @@ export default class RegisterScreen extends React.Component {
     const { navigation } = this.props;
     const placeholderEmail = navigation.getParam("email", "email");
     const placeholderPassword = navigation.getParam("password", "password");
-    return (
-      <View style={styles.container}>
-        <View style={styles.form}>
-          <Text>Register</Text>
-          <TextInput
-            placeholder="email"
-            defaultValue={placeholderEmail}
-            autoFocus={true}
-            autoCapitalize="none"
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            onChangeText={email => this.setState({ email })}
-          />
-          <TextInput
-            placeholder="password"
-            defaultValue={placeholderPassword}
-            textContentType="password"
-            secureTextEntry={true}
-            onChangeText={password => this.setState({ password })}
-          />
-          <Button onPress={this._register} title="Register" />
+
+    if (this.state.isWaiting) {
+      return <LoadingPanel />;
+    } else {
+      return (
+        <View style={styles.container}>
+          <View style={styles.form}>
+            <Text>Register</Text>
+            <TextInput
+              placeholder="email"
+              defaultValue={placeholderEmail}
+              autoFocus={true}
+              autoCapitalize="none"
+              textContentType="emailAddress"
+              keyboardType="email-address"
+              onChangeText={email => this.setState({ email })}
+            />
+            <TextInput
+              placeholder="password"
+              defaultValue={placeholderPassword}
+              textContentType="password"
+              secureTextEntry={true}
+              onChangeText={password => this.setState({ password })}
+            />
+            <Button onPress={this._register} title="Register" />
+          </View>
+          <View style={styles.alt}>
+            <Text>Already have an account?</Text>
+            <Button onPress={this._navToSignIn} title="Sign In" />
+          </View>
+          <View style={styles.messages}>
+            <Text>{this.state.error}</Text>
+          </View>
         </View>
-        <View style={styles.alt}>
-          <Text>Already have an account?</Text>
-          <Button onPress={this._navToSignIn} title="Sign In" />
-        </View>
-        <View style={styles.messages}>
-          <Text>{this.state.error}</Text>
-        </View>
-      </View>
-    );
+      );
+    }
   }
 
   // TODO: Check password for minimum requirements
   _register = async () => {
+    this.setState({ isWaiting: true });
     const { email, password } = this.state;
     if (email && password) {
       const authString = base64.encode(`${email}:${password}`);
@@ -78,21 +86,21 @@ export default class RegisterScreen extends React.Component {
       })
         .then(res => res.json())
         .then(json => {
-          console.log(json);
           if (json.verified) {
             AsyncStorage.setItem("userToken", json.id);
             AsyncStorage.setItem("username", email);
             AsyncStorage.setItem("authString", authString);
+            this.setState({ isWaiting: false });
             this.props.navigation.navigate("App");
           } else {
-            this.setState({ error: json.msg });
+            this.setState({ error: json.msg, isWaiting: false });
           }
         })
         .catch(err => console.log("Error!", err));
     } else if (!email) {
-      this.setState({ error: "Email cannot be blank!" });
+      this.setState({ error: "Email cannot be blank!", isWaiting: false });
     } else if (!password) {
-      this.setState({ error: "Password cannot be blank!" });
+      this.setState({ error: "Password cannot be blank!", isWaiting: false });
     }
   };
 

@@ -8,6 +8,7 @@ import {
   View
 } from "react-native";
 import base64 from "react-native-base64";
+import LoadingPanel from "../components/LoadingPanel";
 
 const { URL } = require("../constants/Constants");
 
@@ -19,6 +20,7 @@ export default class SignInScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isWaiting: false,
       email: null,
       password: null,
       error: ""
@@ -29,37 +31,42 @@ export default class SignInScreen extends React.Component {
     const { navigation } = this.props;
     const placeholderEmail = navigation.getParam("email", "");
     const placeholderPassword = navigation.getParam("password", "");
-    return (
-      <View style={styles.container}>
-        <View style={styles.form}>
-          <Text>Sign In</Text>
-          <TextInput
-            placeholder="email"
-            defaultValue={placeholderEmail}
-            autoFocus={true}
-            autoCapitalize="none"
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            onChangeText={email => this.setState({ email })}
-          />
-          <TextInput
-            placeholder="password"
-            defaultValue={placeholderPassword}
-            textContentType="password"
-            secureTextEntry={true}
-            onChangeText={password => this.setState({ password })}
-          />
-          <Button onPress={this._signIn} title="Sign In" />
+
+    if (this.state.isWaiting) {
+      return <LoadingPanel />;
+    } else {
+      return (
+        <View style={styles.container}>
+          <View style={styles.form}>
+            <Text>Sign In</Text>
+            <TextInput
+              placeholder="email"
+              defaultValue={placeholderEmail}
+              autoFocus={true}
+              autoCapitalize="none"
+              textContentType="emailAddress"
+              keyboardType="email-address"
+              onChangeText={email => this.setState({ email })}
+            />
+            <TextInput
+              placeholder="password"
+              defaultValue={placeholderPassword}
+              textContentType="password"
+              secureTextEntry={true}
+              onChangeText={password => this.setState({ password })}
+            />
+            <Button onPress={this._signIn} title="Sign In" />
+          </View>
+          <View style={styles.alt}>
+            <Text>Need an account?</Text>
+            <Button onPress={this._navToRegister} title="Register" />
+          </View>
+          <View style={styles.messages}>
+            <Text>{this.state.error}</Text>
+          </View>
         </View>
-        <View style={styles.alt}>
-          <Text>Need an account?</Text>
-          <Button onPress={this._navToRegister} title="Register" />
-        </View>
-        <View style={styles.messages}>
-          <Text>{this.state.error}</Text>
-        </View>
-      </View>
-    );
+      );
+    }
   }
 
   _signIn = async () => {
