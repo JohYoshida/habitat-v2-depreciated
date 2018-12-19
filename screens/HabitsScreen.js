@@ -67,23 +67,23 @@ export default class HomeScreen extends React.Component {
             onPress={this._showCalendar.bind(this)}
             onLongPress={this._deleteHabit.bind(this)}
             onRefresh={this._getHabits.bind(this)}
-            />
+          />
         </View>
         <View style={styles.bottom}>
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.button}
               onPress={this._showNewHabitModal.bind(this)}
-              >
+            >
               <Ionicons
                 style={styles.icon}
                 name={
                   Platform.OS === "ios"
-                  ? `ios-add${focused ? "" : "-outline"}`
-                  : "md-add"
+                    ? `ios-add${focused ? "" : "-outline"}`
+                    : "md-add"
                 }
                 color="white"
-                />
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     alignItems: "center",
-    flexDirection: "row",
+    flexDirection: "row"
   },
   container: {
     flex: 1,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 100,
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
   },
   textInput: {
     marginTop: 50,
@@ -218,9 +218,9 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 2,
-    marginBottom: 10,
+    marginBottom: 10
   },
   bottom: {
-    flex: 1,
+    flex: 1
   }
 });

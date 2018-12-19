@@ -9,15 +9,14 @@ class QuotesListItem extends PureComponent {
   render() {
     const { quote } = this.props;
     return (
-      <TouchableOpacity
-      >
+      <TouchableOpacity>
         <View
           style={{
             marginLeft: 10,
             marginRight: 10,
             padding: 5,
             borderWidth: 1,
-            borderRadius: 5,
+            borderRadius: 5
           }}
         >
           <Text style={styles.name}>{quote.text}</Text>

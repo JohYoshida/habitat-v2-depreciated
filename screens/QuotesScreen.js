@@ -25,7 +25,7 @@ export default class QuotesScreen extends React.Component {
       authString: "",
       isGettingQuotes: true,
       quotes: [],
-      quote: {},
+      quote: {}
     };
   }
 
@@ -33,70 +33,60 @@ export default class QuotesScreen extends React.Component {
     this._getAsyncKeys().then(() => {
       this._getQuotes().then(() => {
         this._showQuote();
-      })
-    })
+      });
+    });
   }
 
   render() {
-
     const AddButton = (
-      <TouchableOpacity
-        style={styles.button}
-        onPress={this._showQuote}
-        >
+      <TouchableOpacity style={styles.button} onPress={this._addQuote}>
         <Ionicons
           style={styles.add}
           name={
             Platform.OS === "ios"
-            ? `ios-add${focused ? "" : "-outline"}`
-            : "md-add"
+              ? `ios-add${focused ? "" : "-outline"}`
+              : "md-add"
           }
           color="white"
-          />
+        />
       </TouchableOpacity>
     );
     const EggButton = (
-      <TouchableOpacity
-        style={styles.button}
-        onPress={this._showQuote}
-        >
+      <TouchableOpacity style={styles.button} onPress={this._showQuote}>
         <Ionicons
           style={styles.egg}
           name={
             Platform.OS === "ios"
-            ? `ios-egg${focused ? "" : "-outline"}`
-            : "md-egg"
+              ? `ios-egg${focused ? "" : "-outline"}`
+              : "md-egg"
           }
           color="white"
-          />
+        />
       </TouchableOpacity>
     );
     const ListButton = (
-      <TouchableOpacity
-        style={styles.button}
-        onPress={this._showQuote}
-        >
+      <TouchableOpacity style={styles.button} onPress={this._viewQuotes}>
         <Ionicons
           style={styles.list}
           name={
             Platform.OS === "ios"
-            ? `ios-list${focused ? "" : "-outline"}`
-            : "md-list"
+              ? `ios-list${focused ? "" : "-outline"}`
+              : "md-list"
           }
           color="white"
-          />
+        />
       </TouchableOpacity>
     );
 
     return (
       <View style={styles.container}>
-      <View style={styles.top}>
-        <QuoteDisplay
-          isLoading={this.state.isGettingQuotes}
-          quote={this.state.quote}
+        <View style={styles.top}>
+          <QuoteDisplay
+            isLoading={this.state.isGettingQuotes}
+            quote={this.state.quote}
           />
-      </View>
-      <View style={styles.bottom}>
+        </View>
+        <View style={styles.bottom}>
           <View style={styles.buttons}>
             {AddButton}
             {EggButton}
@@ -159,7 +149,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     alignItems: "center",
-    flexDirection: "row",
+    flexDirection: "row"
   },
   container: {
     flex: 1,
@@ -169,10 +159,10 @@ const styles = StyleSheet.create({
     fontSize: 50
   },
   add: {
-    fontSize: 30,
+    fontSize: 30
   },
   list: {
-    fontSize: 30,
+    fontSize: 30
   },
   textInput: {
     marginTop: 50,
@@ -183,9 +173,9 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 3,
-    marginBottom: 10,
+    marginBottom: 10
   },
   bottom: {
-    flex: 1,
+    flex: 1
   }
 });

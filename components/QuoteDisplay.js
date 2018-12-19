@@ -1,21 +1,12 @@
 import React from "react";
-import {
-  Platform,
-  Text,
-  ScrollView,
-  StyleSheet,
-  View
-} from "react-native";
+import { Platform, Text, ScrollView, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import LoadingPanel from "./LoadingPanel";
 
 export default class HomeScreen extends React.Component {
-
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   render() {
@@ -54,7 +45,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    alignSelf: "center",
+    alignSelf: "center"
   },
   text: {
     textAlign: "center",
@@ -63,21 +54,21 @@ const styles = StyleSheet.create({
   author: {
     textAlign: "left",
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 15
   },
   source: {
     textAlign: "left",
     fontStyle: "italic",
     fontSize: 15,
-    marginBottom: 20,
+    marginBottom: 20
   },
-  icon_left:  {
+  icon_left: {
     fontSize: 20,
-    alignSelf: "flex-start",
+    alignSelf: "flex-start"
   },
-  icon_right:  {
+  icon_right: {
     fontSize: 20,
     alignSelf: "flex-end",
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
 });
