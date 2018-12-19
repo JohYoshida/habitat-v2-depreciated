@@ -10,7 +10,14 @@ export default class ViewQuotesScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      quotes: {},
+    };
+  }
+
+  componentDidMount() {
+    const { quotes } = this.props.navigation.state.params;
+    this.setState({ quotes });
   }
 
   render() {
@@ -24,12 +31,19 @@ export default class ViewQuotesScreen extends React.Component {
       <View style={styles.container}>
         <QuotesList
           isLoading={isGettingQuotes}
-          quotes={quotes}
-          onRefresh={refresh}
+          quotes={this.state.quotes}
+          onRefresh={this._handleRefresh}
           navToEditQuote={navToEditQuote}
         />
       </View>
     );
+  }
+
+  _handleRefresh = () => {
+    this.props.navigation.state.params.refresh().then(quotes => {
+      console.log(quotes);
+      this.setState({ quotes });
+    });
   }
 }
 

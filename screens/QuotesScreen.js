@@ -121,7 +121,7 @@ export default class QuotesScreen extends React.Component {
         .then(res => res.json())
         .then(quotes => {
           this.setState({ quotes, isGettingQuotes: false });
-          resolve();
+          resolve(quotes);
         })
         .catch(err => {
           console.log("Error!", err);
