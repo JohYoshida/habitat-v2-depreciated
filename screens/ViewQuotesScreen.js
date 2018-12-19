@@ -41,7 +41,6 @@ export default class ViewQuotesScreen extends React.Component {
 
   _handleRefresh = () => {
     this.props.navigation.state.params.refresh().then(quotes => {
-      console.log(quotes);
       this.setState({ quotes });
     });
   }
