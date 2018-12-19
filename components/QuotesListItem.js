@@ -7,18 +7,10 @@ class QuotesListItem extends PureComponent {
   }
 
   render() {
-    const { quote } = this.props;
+    const { quote, navToEditQuote } = this.props;
     return (
-      <TouchableOpacity>
-        <View
-          style={{
-            marginLeft: 10,
-            marginRight: 10,
-            padding: 5,
-            borderWidth: 1,
-            borderRadius: 5
-          }}
-        >
+      <TouchableOpacity onPress={navToEditQuote.bind(this, quote)}>
+        <View style={styles.container} >
           <Text style={styles.name}>{quote.text}</Text>
           <Text style={styles.date}>{quote.author}</Text>
           <Text style={styles.date}>{quote.source}</Text>
@@ -29,6 +21,13 @@ class QuotesListItem extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginLeft: 10,
+    marginRight: 10,
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 5
+  },
   name: {
     fontSize: 15,
     color: "black"

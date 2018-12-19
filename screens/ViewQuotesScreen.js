@@ -17,7 +17,8 @@ export default class ViewQuotesScreen extends React.Component {
     const {
       isGettingQuotes,
       quotes,
-      refresh
+      refresh,
+      navToEditQuote
     } = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
@@ -25,6 +26,7 @@ export default class ViewQuotesScreen extends React.Component {
           isLoading={isGettingQuotes}
           quotes={quotes}
           onRefresh={refresh}
+          navToEditQuote={navToEditQuote}
         />
       </View>
     );

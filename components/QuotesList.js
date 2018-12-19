@@ -38,7 +38,13 @@ class QuotesList extends Component {
 
   _keyExtractor = (item, index) => item.id;
 
-  _renderItem = ({ item }) => <QuotesListItem key={item.id} quote={item} />;
+  _renderItem = ({ item }) => (
+    <QuotesListItem
+      key={item.id}
+      quote={item}
+      navToEditQuote={this.props.navToEditQuote}
+    />
+  );
 
   _renderSeparator = () => {
     return <View style={styles.separator} />;

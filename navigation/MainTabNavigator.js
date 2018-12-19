@@ -17,6 +17,7 @@ import CalendarScreen from "../screens/CalendarScreen";
 import QuotesScreen from "../screens/QuotesScreen";
 import ViewQuotesScreen from "../screens/ViewQuotesScreen";
 import AddQuoteScreen from "../screens/AddQuoteScreen";
+import EditQuoteScreen from "../screens/EditQuoteScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -94,7 +95,8 @@ HabitsStack.navigationOptions = {
 const QuotesStack = createStackNavigator({
   Quotes: QuotesScreen,
   ViewQuotes: ViewQuotesScreen,
-  AddQuote: AddQuoteScreen
+  AddQuote: AddQuoteScreen,
+  EditQuote: EditQuoteScreen,
 });
 
 QuotesStack.navigationOptions = {

@@ -32,14 +32,14 @@ export default class QuotesScreen extends React.Component {
   componentDidMount() {
     this._getAsyncKeys().then(() => {
       this._getQuotes().then(() => {
-        this._showQuote();
+        this._shuffleQuoteDisplay();
       });
     });
   }
 
   render() {
     const AddButton = (
-      <TouchableOpacity style={styles.button} onPress={this._addQuote}>
+      <TouchableOpacity style={styles.button} onPress={this._navToAddQuote}>
         <Ionicons
           style={styles.add}
           name={
@@ -52,7 +52,7 @@ export default class QuotesScreen extends React.Component {
       </TouchableOpacity>
     );
     const EggButton = (
-      <TouchableOpacity style={styles.button} onPress={this._showQuote}>
+      <TouchableOpacity style={styles.button} onPress={this._shuffleQuoteDisplay}>
         <Ionicons
           style={styles.egg}
           name={
@@ -65,7 +65,7 @@ export default class QuotesScreen extends React.Component {
       </TouchableOpacity>
     );
     const ListButton = (
-      <TouchableOpacity style={styles.button} onPress={this._viewQuotes}>
+      <TouchableOpacity style={styles.button} onPress={this._navToViewQuotes}>
         <Ionicons
           style={styles.list}
           name={
@@ -148,23 +148,46 @@ export default class QuotesScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   };
 
-  _addQuote = () => {
+  _editQuote = (quote) => {
+    const { id, text, author, source } = quote;
+    fetch(`${URL}/quotes/${this.state.userToken}/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text, author, source })
+    })
+    .then(res => res.json())
+    .then(json => {
+      this._getQuotes();
+    })
+    .catch(err => console.log("Error!", err));
+  };
+
+  _navToAddQuote = () => {
     this.props.navigation.navigate("AddQuote", { postQuote: this._postQuote });
   };
 
-  _showQuote = () => {
-    const { quotes } = this.state;
-    const random = Math.floor(Math.random() * quotes.length);
-    this.setState({ quote: quotes[random] });
+  _navToEditQuote = (quote) => {
+    this.props.navigation.navigate("EditQuote", { quote, editQuote: this._editQuote });
   };
 
-  _viewQuotes = () => {
+  _navToViewQuotes = () => {
     const { quotes, isGettingQuotes } = this.state;
     this.props.navigation.navigate("ViewQuotes", {
       isGettingQuotes,
       quotes,
-      refresh: this._getQuotes.bind(this)
+      refresh: this._getQuotes.bind(this),
+      navToEditQuote: this._navToEditQuote.bind(this)
     });
+  };
+
+  _shuffleQuoteDisplay = () => {
+    const { quotes } = this.state;
+    const random = Math.floor(Math.random() * quotes.length);
+    this.setState({ quote: quotes[random] });
   };
 }
 
