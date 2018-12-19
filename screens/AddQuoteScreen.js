@@ -1,8 +1,6 @@
 import React from "react";
 import { Button, Text, TextInput, StyleSheet, View } from "react-native";
 
-const { URL } = require("../constants/Constants");
-
 export default class AddQuoteScreen extends React.Component {
   static navigationOptions = {
     // title: "Quotes"
