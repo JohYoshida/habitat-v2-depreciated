@@ -14,29 +14,33 @@ export default class HomeScreen extends React.Component {
     if (isLoading) {
       return <LoadingPanel />;
     } else {
-      return (
-        <ScrollView style={styles.container}>
-          <Ionicons
-            style={styles.icon_left}
-            name={
-              Platform.OS === "ios"
-                ? `ios-quote${focused ? "" : "-outline"}`
-                : "md-quote"
-            }
-          />
-          <Text style={styles.text}>{quote.text}</Text>
-          <Ionicons
-            style={styles.icon_right}
-            name={
-              Platform.OS === "ios"
-                ? `ios-quote${focused ? "" : "-outline"}`
-                : "md-quote"
-            }
-          />
-          <Text style={styles.author}>{quote.author}</Text>
-          <Text style={styles.source}>{quote.source}</Text>
-        </ScrollView>
-      );
+      if (!quote) {
+        return <View />;
+      } else {
+        return (
+          <ScrollView style={styles.container}>
+            <Ionicons
+              style={styles.icon_left}
+              name={
+                Platform.OS === "ios"
+                  ? `ios-quote${focused ? "" : "-outline"}`
+                  : "md-quote"
+              }
+            />
+            <Text style={styles.text}>{quote.text}</Text>
+            <Ionicons
+              style={styles.icon_right}
+              name={
+                Platform.OS === "ios"
+                  ? `ios-quote${focused ? "" : "-outline"}`
+                  : "md-quote"
+              }
+            />
+            <Text style={styles.author}>{quote.author}</Text>
+            <Text style={styles.source}>{quote.source}</Text>
+          </ScrollView>
+        );
+      }
     }
   }
 }
