@@ -166,12 +166,28 @@ export default class QuotesScreen extends React.Component {
     .catch(err => console.log("Error!", err));
   };
 
+  _deleteQuote = (id) => {
+    fetch(`${URL}/quotes/${this.state.userToken}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+    .then(json => {
+      this._getQuotes();
+    })
+    .catch(err => console.log("Error!", err));
+  };
+
   _navToAddQuote = () => {
     this.props.navigation.navigate("AddQuote", { postQuote: this._postQuote });
   };
 
   _navToEditQuote = (quote) => {
-    this.props.navigation.navigate("EditQuote", { quote, editQuote: this._editQuote });
+    this.props.navigation.navigate("EditQuote", { quote, editQuote: this._editQuote, deleteQuote: this._deleteQuote });
   };
 
   _navToViewQuotes = () => {

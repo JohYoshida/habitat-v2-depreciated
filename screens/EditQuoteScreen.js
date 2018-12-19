@@ -44,17 +44,23 @@ export default class EditQuoteScreen extends React.Component {
           autoCapitalize="words"
           onChangeText={source => this.setState({ source })}
         />
-      <Button title="Edit Quote" onPress={this._onPress} />
+      <Button title="Edit Quote" onPress={this._editQuote} />
+      <Button title="Delete Quote" onPress={this._deleteQuote} />
       </View>
     );
   }
 
-  _onPress = () => {
+  _editQuote = () => {
     const { id, text, author, source } = this.state;
     const quote = { id, text, author, source };
     this.props.navigation.state.params.editQuote(quote);
     this.props.navigation.goBack();
   };
+
+  _deleteQuote = () => {
+    this.props.navigation.state.params.deleteQuote(this.state.id);
+    this.props.navigation.goBack();
+  }
 }
 
 const styles = StyleSheet.create({
