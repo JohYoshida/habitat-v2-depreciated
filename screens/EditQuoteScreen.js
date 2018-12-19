@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text, TextInput, StyleSheet, View } from "react-native";
+import { Alert, Button, Text, TextInput, StyleSheet, View } from "react-native";
 
 export default class EditQuoteScreen extends React.Component {
   static navigationOptions = {
@@ -58,8 +58,20 @@ export default class EditQuoteScreen extends React.Component {
   };
 
   _deleteQuote = () => {
-    this.props.navigation.state.params.deleteQuote(this.state.id);
-    this.props.navigation.goBack();
+    Alert.alert("Are you sure you want to delete this quote?", "This action cannot be undone.", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          this.props.navigation.state.params.deleteQuote(this.state.id);
+          this.props.navigation.goBack();
+        }
+      }
+    ]);
   }
 }
 
