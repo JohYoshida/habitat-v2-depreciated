@@ -96,7 +96,7 @@ const QuotesStack = createStackNavigator({
   Quotes: QuotesScreen,
   ViewQuotes: ViewQuotesScreen,
   AddQuote: AddQuoteScreen,
-  EditQuote: EditQuoteScreen,
+  EditQuote: EditQuoteScreen
 });
 
 QuotesStack.navigationOptions = {

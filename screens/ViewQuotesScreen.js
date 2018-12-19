@@ -11,7 +11,7 @@ export default class ViewQuotesScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      quotes: {},
+      quotes: {}
     };
   }
 
@@ -43,7 +43,7 @@ export default class ViewQuotesScreen extends React.Component {
     this.props.navigation.state.params.refresh().then(quotes => {
       this.setState({ quotes });
     });
-  }
+  };
 }
 
 const styles = StyleSheet.create({

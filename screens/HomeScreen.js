@@ -23,7 +23,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       userToken: "",
-      username: "",
+      username: ""
     };
   }
 

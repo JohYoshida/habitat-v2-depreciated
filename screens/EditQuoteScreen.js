@@ -14,7 +14,7 @@ export default class EditQuoteScreen extends React.Component {
       id: quote.id,
       text: quote.text,
       source: quote.author,
-      author: quote.source,
+      author: quote.source
     };
   }
 
@@ -44,8 +44,8 @@ export default class EditQuoteScreen extends React.Component {
           autoCapitalize="words"
           onChangeText={source => this.setState({ source })}
         />
-      <Button title="Edit Quote" onPress={this._editQuote} />
-      <Button title="Delete Quote" onPress={this._deleteQuote} />
+        <Button title="Edit Quote" onPress={this._editQuote} />
+        <Button title="Delete Quote" onPress={this._deleteQuote} />
       </View>
     );
   }
@@ -58,21 +58,25 @@ export default class EditQuoteScreen extends React.Component {
   };
 
   _deleteQuote = () => {
-    Alert.alert("Are you sure you want to delete this quote?", "This action cannot be undone.", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      {
-        text: "OK",
-        onPress: () => {
-          this.props.navigation.state.params.deleteQuote(this.state.id);
-          this.props.navigation.goBack();
+    Alert.alert(
+      "Are you sure you want to delete this quote?",
+      "This action cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            this.props.navigation.state.params.deleteQuote(this.state.id);
+            this.props.navigation.goBack();
+          }
         }
-      }
-    ]);
-  }
+      ]
+    );
+  };
 }
 
 const styles = StyleSheet.create({

@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   indigoMuted: {
     flex: 1,
     backgroundColor: Colors.indigoMuted
-  },
+  }
 });
 
 export default Year;

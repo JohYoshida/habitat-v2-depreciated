@@ -52,7 +52,10 @@ export default class QuotesScreen extends React.Component {
       </TouchableOpacity>
     );
     const EggButton = (
-      <TouchableOpacity style={styles.button} onPress={this._shuffleQuoteDisplay}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={this._shuffleQuoteDisplay}
+      >
         <Ionicons
           style={styles.egg}
           name={
@@ -148,7 +151,7 @@ export default class QuotesScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   };
 
-  _editQuote = (quote) => {
+  _editQuote = quote => {
     const { id, text, author, source } = quote;
     fetch(`${URL}/quotes/${this.state.userToken}/${id}`, {
       method: "POST",
@@ -159,14 +162,14 @@ export default class QuotesScreen extends React.Component {
       },
       body: JSON.stringify({ text, author, source })
     })
-    .then(res => res.json())
-    .then(json => {
-      this._getQuotes();
-    })
-    .catch(err => console.log("Error!", err));
+      .then(res => res.json())
+      .then(json => {
+        this._getQuotes();
+      })
+      .catch(err => console.log("Error!", err));
   };
 
-  _deleteQuote = (id) => {
+  _deleteQuote = id => {
     fetch(`${URL}/quotes/${this.state.userToken}/${id}`, {
       method: "DELETE",
       headers: {
@@ -175,19 +178,23 @@ export default class QuotesScreen extends React.Component {
         "Content-Type": "application/json"
       }
     })
-    .then(res => res.json())
-    .then(json => {
-      this._getQuotes();
-    })
-    .catch(err => console.log("Error!", err));
+      .then(res => res.json())
+      .then(json => {
+        this._getQuotes();
+      })
+      .catch(err => console.log("Error!", err));
   };
 
   _navToAddQuote = () => {
     this.props.navigation.navigate("AddQuote", { postQuote: this._postQuote });
   };
 
-  _navToEditQuote = (quote) => {
-    this.props.navigation.navigate("EditQuote", { quote, editQuote: this._editQuote, deleteQuote: this._deleteQuote });
+  _navToEditQuote = quote => {
+    this.props.navigation.navigate("EditQuote", {
+      quote,
+      editQuote: this._editQuote,
+      deleteQuote: this._deleteQuote
+    });
   };
 
   _navToViewQuotes = () => {

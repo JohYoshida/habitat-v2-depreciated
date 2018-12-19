@@ -10,7 +10,7 @@ class QuotesListItem extends PureComponent {
     const { quote, navToEditQuote } = this.props;
     return (
       <TouchableOpacity onPress={navToEditQuote.bind(this, quote)}>
-        <View style={styles.container} >
+        <View style={styles.container}>
           <Text style={styles.name}>{quote.text}</Text>
           <Text style={styles.date}>{quote.author}</Text>
           <Text style={styles.date}>{quote.source}</Text>
