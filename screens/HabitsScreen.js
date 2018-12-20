@@ -15,7 +15,6 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Calendar from "../components/Calendar";
 import HabitsList from "../components/HabitsList";
-import ColorPicker from "../components/ColorPicker";
 
 const { URL } = require("../constants/Constants");
 
@@ -31,9 +30,6 @@ export default class HomeScreen extends React.Component {
       userToken: "",
       authString: "",
       isGettingHabits: true,
-      newHabitModal: false,
-      newHabitName: "",
-      newHabitColor: "",
       habits: []
     };
   }
@@ -45,21 +41,6 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Modal
-          animationType="slide"
-          visible={this.state.newHabitModal}
-          onRequestClose={this._hideNewHabitModal.bind(this)}
-        >
-          <TextInput
-            style={styles.textInput}
-            autoFocus={true}
-            autoCapitalize="words"
-            onChangeText={newHabitName => this.setState({ newHabitName })}
-          />
-          <ColorPicker pickColor={this._pickColor.bind(this)} />
-          <Button title="Add Habit" onPress={this._postHabit.bind(this)} />
-        </Modal>
-
         <View style={styles.top}>
           <HabitsList
             isLoading={this.state.isGettingHabits}
@@ -69,11 +50,12 @@ export default class HomeScreen extends React.Component {
             onRefresh={this._getHabits.bind(this)}
           />
         </View>
+
         <View style={styles.bottom}>
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.button}
-              onPress={this._showNewHabitModal.bind(this)}
+              onPress={this._navToAddHabit.bind(this)}
             >
               <Ionicons
                 style={styles.icon}
@@ -135,14 +117,6 @@ export default class HomeScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   }
 
-  _hideNewHabitModal() {
-    this.setState({ newHabitModal: false });
-  }
-
-  _pickColor(color) {
-    this.setState({ newHabitColor: color });
-  }
-
   _postHabit = (habit, color) => {
     const colors = [
       "red",
@@ -170,10 +144,7 @@ export default class HomeScreen extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(json => {
-        this.setState({ newHabitModal: false });
-        this._getHabits();
-      })
+      .then(json => this._getHabits())
       .catch(err => console.log("Error!", err));
   }
 
@@ -181,7 +152,7 @@ export default class HomeScreen extends React.Component {
     this.props.navigation.navigate("Calendar", { habit, title: habit.name });
   }
 
-  _showNewHabitModal() {
+  _navToAddHabit() {
     this.props.navigation.navigate("AddHabit", {
       habits: this.state.habits,
       postHabit: this._postHabit
