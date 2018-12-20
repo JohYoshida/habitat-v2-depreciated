@@ -24,38 +24,34 @@ class ColorPicker extends Component {
     ];
     const row = [];
     colors.forEach(color => {
-        if (this.state.color === color) {
-          row.push(
-            <TouchableOpacity
-              key={color}
-              style={styles.selected}
-              onPress={this._onPress.bind(this, color)}
-            >
-              <View style={styles.button}>
-                <View style={styles[color]}></View>
-              </View>
-            </TouchableOpacity>
-          );
-        } else {
-          row.push(
-            <TouchableOpacity
-              key={color}
-              style={styles.unselected}
-              onPress={this._onPress.bind(this, color)}
-            >
-              <View style={styles.button}>
-                <View style={styles[color]}></View>
-              </View>
-            </TouchableOpacity>
-          );
-        }
+      if (this.state.color === color) {
+        row.push(
+          <TouchableOpacity
+            key={color}
+            style={styles.selected}
+            onPress={this._onPress.bind(this, color)}
+          >
+            <View style={styles.button}>
+              <View style={styles[color]} />
+            </View>
+          </TouchableOpacity>
+        );
+      } else {
+        row.push(
+          <TouchableOpacity
+            key={color}
+            style={styles.unselected}
+            onPress={this._onPress.bind(this, color)}
+          >
+            <View style={styles.button}>
+              <View style={styles[color]} />
+            </View>
+          </TouchableOpacity>
+        );
+      }
     });
 
-    return (
-      <View style={styles.container}>
-        { row }
-      </View>
-    );
+    return <View style={styles.container}>{row}</View>;
   }
 
   _onPress(color) {
@@ -69,25 +65,25 @@ const styles = StyleSheet.create({
     height: 25,
     alignItems: "center",
     flexDirection: "row",
-    marginVertical: 30,
+    marginVertical: 30
   },
   selected: {
     flex: 8,
     borderWidth: 1,
     borderRadius: 100,
-    margin: 3,
+    margin: 3
   },
   unselected: {
     flex: 8,
     borderRadius: 100,
-    margin: 4,
+    margin: 4
   },
   button: {
     alignSelf: "center",
     height: 25,
     width: 25,
     borderRadius: 100,
-    margin: 2,
+    margin: 2
   },
   red: {
     flex: 1,
