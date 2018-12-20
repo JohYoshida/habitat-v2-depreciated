@@ -143,7 +143,7 @@ export default class HomeScreen extends React.Component {
     this.setState({ newHabitColor: color });
   }
 
-  _postHabit() {
+  _postHabit = (habit, color) => {
     const colors = [
       "red",
       "orange",
@@ -154,10 +154,9 @@ export default class HomeScreen extends React.Component {
       "purple",
       "indigo"
     ];
-    let color;
-    if (this.state.newHabitColor === "") {
+    if (color === "") {
       color = colors[Math.floor(Math.random() * 8)];
-    } else color = this.state.newHabitColor;
+    }
     fetch(`${URL}/users/${this.state.userToken}/habits`, {
       method: "POST",
       headers: {
@@ -166,7 +165,7 @@ export default class HomeScreen extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        name: this.state.newHabitName,
+        name: habit,
         color
       })
     })
@@ -183,7 +182,10 @@ export default class HomeScreen extends React.Component {
   }
 
   _showNewHabitModal() {
-    this.setState({ newHabitModal: true });
+    this.props.navigation.navigate("AddHabit", {
+      habits: this.state.habits,
+      postHabit: this._postHabit
+    });
   }
 }
 
