@@ -35,7 +35,11 @@ export default class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._getAsyncKeys().then(() => this._getHabits());
+    this._getAsyncKeys().then(res => {
+      const { userToken, authString } = res;
+      this.setState({ userToken, authString });
+      this._getHabits()
+    });
   }
 
   render() {
@@ -45,7 +49,7 @@ export default class HomeScreen extends React.Component {
           <HabitsList
             isLoading={this.state.isGettingHabits}
             habits={this.state.habits}
-            onPress={this._showCalendar.bind(this)}
+            onPress={this._navToCalendar.bind(this)}
             onLongPress={this._deleteHabit.bind(this)}
             onRefresh={this._getHabits.bind(this)}
           />
@@ -74,13 +78,15 @@ export default class HomeScreen extends React.Component {
   }
 
   _getAsyncKeys = async () => {
+    let data = {};
     try {
       await AsyncStorage.multiGet(["userToken", "authString"]).then(res => {
-        this.setState({ userToken: res[0][1], authString: res[1][1] });
+        data = { userToken: res[0][1], authString: res[1][1] };
       });
     } catch (err) {
       console.log("Error!", err);
     }
+    return data;
   };
 
   _deleteHabit(name, habit_id) {
@@ -148,8 +154,12 @@ export default class HomeScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   }
 
-  _showCalendar(habit) {
-    this.props.navigation.navigate("Calendar", { habit, title: habit.name });
+  _navToCalendar(habit) {
+    this.props.navigation.navigate("Calendar", {
+      habit,
+      title: habit.name,
+      getAsyncKeys: this._getAsyncKeys,
+    });
   }
 
   _navToAddHabit() {

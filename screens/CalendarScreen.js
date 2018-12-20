@@ -45,18 +45,6 @@ export default class CalendarScreen extends React.Component {
     );
   }
 
-  _getAsyncKeys = async () => {
-    let data = {};
-    try {
-      await AsyncStorage.multiGet(["userToken", "authString"]).then(res => {
-        data = { userToken: res[0][1], authString: res[1][1] };
-      });
-    } catch (err) {
-      console.log("Error!", err);
-    }
-    return data;
-  };
-
   _goForwardYear = () => {
     let { year } = this.state;
     let data = {};
@@ -75,7 +63,7 @@ export default class CalendarScreen extends React.Component {
 
   _fetchData = () => {
     const { habit } = this.props.navigation.state.params;
-    this._getAsyncKeys().then(res => {
+    this.props.navigation.state.params.getAsyncKeys().then(res => {
       const { userToken, authString } = res;
       let { year, data } = this.state;
       // Get days associated with habit
