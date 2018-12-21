@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Alert, Text, TouchableOpacity, StyleSheet, View } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
 class HabitListItem extends PureComponent {
   constructor(props) {
     super(props);
@@ -48,7 +48,7 @@ class HabitListItem extends PureComponent {
     return (
       <TouchableOpacity
         onPress={this._onPress.bind(this, habit)}
-        onLongPress={this._onLongPress.bind(this, habit.name, habit.id)}
+        onLongPress={this._onLongPress.bind(this, habit)}
       >
         <View
           style={{
@@ -72,20 +72,8 @@ class HabitListItem extends PureComponent {
     this.props.onPress(habit);
   }
 
-  _onLongPress(name, habit_id) {
-    Alert.alert("Delete habit", "Are you sure you want to delete this habit?", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      {
-        text: "OK",
-        onPress: () => {
-          this.props.onLongPress(name, habit_id);
-        }
-      }
-    ]);
+  _onLongPress(habit) {
+    this.props.onLongPress(habit);
   }
 }
 

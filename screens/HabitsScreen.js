@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component {
             isLoading={this.state.isGettingHabits}
             habits={this.state.habits}
             onPress={this._navToCalendar.bind(this)}
-            onLongPress={this._deleteHabit.bind(this)}
+            onLongPress={this._navToEditHabit.bind(this)}
             onRefresh={this._getHabits.bind(this)}
           />
         </View>
@@ -88,8 +88,7 @@ export default class HomeScreen extends React.Component {
   };
 
   _deleteHabit(name, habit_id) {
-    const user_id = this.state.userToken;
-    fetch(`${URL}/users/${user_id}/habits`, {
+    fetch(`${URL}/users/${this.state.userToken}/habits`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -106,7 +105,7 @@ export default class HomeScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   }
 
-  _getHabits() {
+  _getHabits = () => {
     this.setState({ isGettingHabits: true });
     fetch(`${URL}/users/${this.state.userToken}/habits`, {
       method: "GET",
@@ -152,7 +151,24 @@ export default class HomeScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   }
 
-  _navToCalendar(habit) {
+  _editHabit = (habit, name, color) => {
+    fetch(`${URL}/users/${this.state.userToken}/habits/${habit.id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Basic " + this.state.authString,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, color })
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+      })
+      .catch(err => console.log("Error!", err));
+  }
+
+  _navToCalendar = habit => {
     this.props.navigation.navigate("Calendar", {
       habit,
       title: habit.name,
@@ -160,10 +176,18 @@ export default class HomeScreen extends React.Component {
     });
   }
 
-  _navToAddHabit() {
+  _navToAddHabit = () => {
     this.props.navigation.navigate("AddHabit", {
       habits: this.state.habits,
       postHabit: this._postHabit
+    });
+  }
+
+  _navToEditHabit = (habit) => {
+    this.props.navigation.navigate("EditHabit", {
+      habit,
+      editHabit: this._editHabit,
+      deleteHabit: this._deleteHabit.bind(this)
     });
   }
 }

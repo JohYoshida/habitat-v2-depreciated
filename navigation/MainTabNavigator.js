@@ -14,6 +14,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import HabitsScreen from "../screens/HabitsScreen";
 import CalendarScreen from "../screens/CalendarScreen";
 import AddHabitScreen from "../screens/AddHabitScreen";
+import EditHabitScreen from "../screens/EditHabitScreen";
 import EditDayScreen from "../screens/EditDayScreen";
 
 import QuotesScreen from "../screens/QuotesScreen";
@@ -78,8 +79,8 @@ SettingsStack.navigationOptions = {
 const HabitsStack = createStackNavigator({
   Habits: HabitsScreen,
   Calendar: CalendarScreen,
-  AddHabit: AddHabitScreen
   AddHabit: AddHabitScreen,
+  EditHabit: EditHabitScreen,
   EditDay: EditDayScreen,
 });
 
