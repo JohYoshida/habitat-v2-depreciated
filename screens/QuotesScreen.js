@@ -9,13 +9,17 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import QuoteDisplay from "../components/QuoteDisplay";
+import Colors from "../constants/Colors";
 
 const { URL } = require("../constants/Constants");
 
 export default class QuotesScreen extends React.Component {
   static navigationOptions = {
-    title: "Quotes"
-    // header: null,
+    title: "Quotes",
+    headerStyle: {
+      backgroundColor: Colors.basil_Primary,
+    },
+    headerTintColor: '#fff',
   };
 
   constructor(props) {
@@ -219,8 +223,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     margin: 5,
-    backgroundColor: "#2196F3",
-    borderRadius: 100
+    backgroundColor: Colors.basil_Dark,
+    borderRadius: 100,
+    elevation: 10,
   },
   buttons: {
     position: "absolute",
@@ -230,7 +235,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: 5
+    // marginTop: 5,
+    // backgroundColor: "#4c8c4a"
   },
   egg: {
     fontSize: 50

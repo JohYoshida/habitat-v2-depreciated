@@ -20,14 +20,26 @@ class ColorPicker extends Component {
 
   render() {
     const colors = [
-      "red",
-      "orange",
-      "yellow",
-      "lime",
-      "green",
-      "blue",
-      "purple",
-      "indigo"
+      // "red",
+      // "orange",
+      // "yellow",
+      // "lime",
+      // "green",
+      // "blue",
+      // "purple",
+      // "indigo"
+      "tomato",
+      "tangerine",
+      "banana",
+      "basil",
+      "sage",
+      "peacock",
+      "blueberry",
+      "lavender",
+      "grape",
+      "flamingo",
+      "graphite",
+      "default",
     ];
     const row = [];
     colors.forEach(color => {
@@ -58,7 +70,15 @@ class ColorPicker extends Component {
       }
     });
 
-    return <View style={styles.container}>{row}</View>;
+    let top = row.slice(0, 6);
+    let bottom = row.slice(6);
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.row}>{top}</View>
+        <View style={styles.row}>{bottom}</View>
+      </View>
+    );
   }
 
   _onPress(color) {
@@ -69,19 +89,23 @@ class ColorPicker extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginVertical: 30
+  },
+  row: {
     height: 25,
     alignItems: "center",
     flexDirection: "row",
-    marginVertical: 30
+    flexWrap: "wrap",
+    marginBottom: 20,
   },
   selected: {
-    flex: 8,
+    flex: 6,
     borderWidth: 1,
     borderRadius: 100,
     margin: 3
   },
   unselected: {
-    flex: 8,
+    flex: 6,
     borderRadius: 100,
     margin: 4
   },
@@ -92,46 +116,66 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     margin: 2
   },
-  red: {
+  tomato: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["redPrimary"]
+    backgroundColor: Colors["tomato_Primary"]
   },
-  orange: {
+  tangerine: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["orangePrimary"]
+    backgroundColor: Colors["tangerine_Primary"]
   },
-  yellow: {
+  banana: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["yellowPrimary"]
+    backgroundColor: Colors["banana_Primary"]
   },
-  lime: {
+  basil: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["limePrimary"]
+    backgroundColor: Colors["basil_Primary"]
   },
-  green: {
+  sage: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["greenPrimary"]
+    backgroundColor: Colors["sage_Primary"]
   },
-  blue: {
+  peacock: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["bluePrimary"]
+    backgroundColor: Colors["peacock_Primary"]
   },
-  purple: {
+  blueberry: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["purplePrimary"]
+    backgroundColor: Colors["blueberry_Primary"]
   },
-  indigo: {
+  lavender: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: Colors["indigoPrimary"]
-  }
+    backgroundColor: Colors["lavender_Primary"]
+  },
+  grape: {
+    flex: 1,
+    borderRadius: 100,
+    backgroundColor: Colors["grape_Primary"]
+  },
+  flamingo: {
+    flex: 1,
+    borderRadius: 100,
+    backgroundColor: Colors["flamingo_Primary"]
+  },
+  graphite: {
+    flex: 1,
+    borderRadius: 100,
+    backgroundColor: Colors["graphite_Primary"]
+  },
+  default: {
+    flex: 1,
+    borderRadius: 100,
+    backgroundColor: Colors["default_Primary"]
+  },
 });
 
 export default ColorPicker;

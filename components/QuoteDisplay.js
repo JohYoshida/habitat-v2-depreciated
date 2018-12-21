@@ -2,6 +2,7 @@ import React from "react";
 import { Platform, Text, ScrollView, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import LoadingPanel from "./LoadingPanel";
+import Colors from "../constants/Colors";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -49,7 +50,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    alignSelf: "center"
+    margin: 20,
+    alignSelf: "center",
+    backgroundColor: Colors.basil_Light,
+    borderRadius: 5,
   },
   text: {
     textAlign: "center",
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontStyle: "italic",
     fontSize: 15,
-    marginBottom: 20
+    paddingBottom: 50
   },
   icon_left: {
     fontSize: 20,

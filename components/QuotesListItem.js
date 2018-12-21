@@ -1,5 +1,8 @@
 import React, { PureComponent } from "react";
 import { Alert, Text, TouchableOpacity, StyleSheet, View } from "react-native";
+import Colors from "../constants/Colors";
+
+
 class QuotesListItem extends PureComponent {
   constructor(props) {
     super(props);
@@ -26,7 +29,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     padding: 5,
     borderWidth: 1,
-    borderRadius: 5
+    borderRadius: 5,
+    backgroundColor: Colors.basil_Light
   },
   name: {
     fontSize: 15,

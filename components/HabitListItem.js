@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
+import Colors from "../constants/Colors";
+
 class HabitListItem extends PureComponent {
   constructor(props) {
     super(props);
@@ -11,37 +13,53 @@ class HabitListItem extends PureComponent {
     let primary = "";
     let secondary = "";
     switch (habit.color) {
-      case "red":
-        primary = "#f44336";
-        secondary = "#b71c1c";
+      case "tomato":
+        primary = Colors.tomato_Primary;
+        secondary = Colors.tomato_Dark;
         break;
-      case "orange":
-        primary = "#FF9800";
-        secondary = "#E65100";
+      case "tangerine":
+        primary = Colors.tangerine_Primary;
+        secondary = Colors.tangerine_Dark;
         break;
-      case "yellow":
-        primary = "#FFEB3B";
-        secondary = "#FDD835";
+      case "banana":
+        primary = Colors.banana_Primary;
+        secondary = Colors.banana_Dark;
         break;
-      case "lime":
-        primary = "#CDDC39";
-        secondary = "#827717";
+      case "basil":
+        primary = Colors.basil_Primary;
+        secondary = Colors.basil_Dark;
         break;
-      case "green":
-        primary = "#4CAF50";
-        secondary = "#1B5E20";
+      case "sage":
+        primary = Colors.sage_Primary;
+        secondary = Colors.sage_Dark;
         break;
-      case "blue":
-        primary = "#2196F3";
-        secondary = "#0D47A1";
+      case "peacock":
+        primary = Colors.peacock_Primary;
+        secondary = Colors.peacock_Dark;
         break;
-      case "purple":
-        primary = "#9C27B0";
-        secondary = "#4A148C";
+      case "blueberry":
+        primary = Colors.blueberry_Primary;
+        secondary = Colors.blueberry_Dark;
         break;
-      case "indigo":
-        primary = "#3F51B5";
-        secondary = "#1A237E";
+      case "lavender":
+        primary = Colors.lavender_Primary;
+        secondary = Colors.lavender_Dark;
+        break;
+      case "grape":
+      primary = Colors.grape_Primary;
+      secondary = Colors.grape_Dark;
+        break;
+      case "flamingo":
+      primary = Colors.flamingo_Primary;
+      secondary = Colors.flamingo_Dark;
+        break;
+      case "graphite":
+      primary = Colors.graphite_Dark;
+      secondary = Colors.graphite_Dark;
+        break;
+      case "default":
+      primary = Colors.default_Primary;
+      secondary = Colors.default_Dark;
         break;
       default:
     }

@@ -36,7 +36,7 @@ class Year extends React.Component {
               )}
             >
               <View style={styles.day}>
-                <View style={styles[`${habit.color}Primary`]}>
+                <View style={styles[`${habit.color}_Dark`]}>
                   <Text>{i}</Text>
                   <Text>{data[key].value}</Text>
                 </View>
@@ -51,7 +51,7 @@ class Year extends React.Component {
               onLongPress={this.props.onLongPress.bind(this, month, i, 0)}
             >
               <View style={styles.day}>
-                <View style={styles[`${habit.color}Muted`]}>
+                <View style={styles[`${habit.color}_Light`]}>
                   <Text>{i}</Text>
                 </View>
               </View>
@@ -82,70 +82,98 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 1
   },
-  redPrimary: {
+  tomato_Dark: {
     flex: 1,
-    backgroundColor: Colors.redPrimary
+    backgroundColor: Colors.tomato_Dark
   },
-  orangePrimary: {
+  tangerine_Dark: {
     flex: 1,
-    backgroundColor: Colors.orangePrimary
+    backgroundColor: Colors.tangerine_Dark
   },
-  yellowPrimary: {
+  banana_Dark: {
     flex: 1,
-    backgroundColor: Colors.yellowPrimary
+    backgroundColor: Colors.banana_Dark
   },
-  limePrimary: {
+  basil_Dark: {
     flex: 1,
-    backgroundColor: Colors.limePrimary
+    backgroundColor: Colors.basil_Dark
   },
-  greenPrimary: {
+  sage_Dark: {
     flex: 1,
-    backgroundColor: Colors.greenPrimary
+    backgroundColor: Colors.sage_Dark
   },
-  bluePrimary: {
+  peacock_Dark: {
     flex: 1,
-    backgroundColor: Colors.bluePrimary
+    backgroundColor: Colors.peacock_Dark
   },
-  purplePrimary: {
+  blueberry_Dark: {
     flex: 1,
-    backgroundColor: Colors.purplePrimary
+    backgroundColor: Colors.blueberry_Dark
   },
-  indigoPrimary: {
+  lavender_Dark: {
     flex: 1,
-    backgroundColor: Colors.indigoPrimary
+    backgroundColor: Colors.lavender_Dark
   },
-  redMuted: {
+  grape_Dark: {
     flex: 1,
-    backgroundColor: Colors.redMuted
+    backgroundColor: Colors.grape_Dark
   },
-  orangeMuted: {
+  graphite_Dark: {
     flex: 1,
-    backgroundColor: Colors.orangeMuted
+    backgroundColor: Colors.graphite_Dark
   },
-  yellowMuted: {
+  default_Dark: {
     flex: 1,
-    backgroundColor: Colors.yellowMuted
+    backgroundColor: Colors.default_Dark
   },
-  limeMuted: {
+  tomato_Light: {
     flex: 1,
-    backgroundColor: Colors.limeMuted
+    backgroundColor: Colors.tomato_Light
   },
-  greenMuted: {
+  tangerine_Light: {
     flex: 1,
-    backgroundColor: Colors.greenMuted
+    backgroundColor: Colors.tangerine_Light
   },
-  blueMuted: {
+  banana_Light: {
     flex: 1,
-    backgroundColor: Colors.blueMuted
+    backgroundColor: Colors.banana_Light
   },
-  purpleMuted: {
+  basil_Light: {
     flex: 1,
-    backgroundColor: Colors.purpleMuted
+    backgroundColor: Colors.basil_Light
   },
-  indigoMuted: {
+  sage_Light: {
     flex: 1,
-    backgroundColor: Colors.indigoMuted
-  }
+    backgroundColor: Colors.sage_Light
+  },
+  peacock_Light: {
+    flex: 1,
+    backgroundColor: Colors.peacock_Light
+  },
+  blueberry_Light: {
+    flex: 1,
+    backgroundColor: Colors.blueberry_Light
+  },
+  lavender_Light: {
+    flex: 1,
+    backgroundColor: Colors.lavender_Light
+  },
+  grape_Light: {
+    flex: 1,
+    backgroundColor: Colors.grape_Light
+  },
+  flamingo_Light: {
+    flex: 1,
+    backgroundColor: Colors.flamingo_Light
+  },
+  graphite_Light: {
+    flex: 1,
+    backgroundColor: Colors.graphite_Light
+  },
+  default_Light: {
+    flex: 1,
+    backgroundColor: Colors.default_Light
+  },
 });
 
 export default Year;

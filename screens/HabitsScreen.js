@@ -13,13 +13,19 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import HabitsList from "../components/HabitsList";
+import Colors from "../constants/Colors";
 
 const { URL } = require("../constants/Constants");
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: "Habits"
-    // header: null,
+    title: "Habits",
+    headerStyle: {
+      backgroundColor: Colors.default_Primary,
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+    },
   };
 
   constructor(props) {
@@ -197,8 +203,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     margin: 5,
-    backgroundColor: "#2196F3",
-    borderRadius: 100
+    backgroundColor: Colors.default_Dark,
+    borderRadius: 100,
+    elevation: 10,
   },
   buttons: {
     position: "absolute",

@@ -1,14 +1,20 @@
 import React from "react";
 import { AsyncStorage, StyleSheet, View } from "react-native";
 import Calendar from "../components/Calendar";
+import Colors from "../constants/Colors";
 
 const moment = require("moment");
 const { URL } = require("../constants/Constants");
 
 export default class CalendarScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
+    let habit = navigation.getParam("habit");
     return {
-      title: navigation.getParam("title", "")
+      title: navigation.getParam("title", ""),
+      headerStyle: {
+        backgroundColor: Colors[`${habit.color}_Primary`],
+      },
+      headerTintColor: '#fff',
     };
   };
 
