@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text, TextInput, StyleSheet, View } from "react-native";
+import { Alert, Button, Text, TextInput, StyleSheet, View } from "react-native";
 
 export default class EditDayScreen extends React.Component {
   static navigationOptions = {
@@ -59,10 +59,26 @@ export default class EditDayScreen extends React.Component {
   };
 
   _delete = () => {
-    const { selectedDay, deleteDay } = this.props.navigation.state.params;
-    const { habit_id, month, day } = selectedDay;
-    deleteDay(habit_id, month, day);
-    this.props.navigation.goBack();
+    Alert.alert(
+      "Are you sure you want to delete this day?",
+      "This action cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            const { selectedDay, deleteDay } = this.props.navigation.state.params;
+            const { habit_id, month, day } = selectedDay;
+            deleteDay(habit_id, month, day);
+            this.props.navigation.goBack();
+          }
+        }
+      ]
+    );
   }
 }
 
