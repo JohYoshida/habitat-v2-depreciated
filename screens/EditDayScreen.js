@@ -40,8 +40,15 @@ export default class EditDayScreen extends React.Component {
           onChangeText={value => this.setState({ value })}
         />
         {warning}
-        <Button title="Edit" onPress={this._edit} />
-        <Button title="Delete" onPress={this._delete} />
+        <Button
+          title="Edit"
+          onPress={this._edit}
+        />
+        <Button
+          title="Delete"
+          onPress={this._delete}
+          color="#f44336"
+        />
       </View>
     );
   }

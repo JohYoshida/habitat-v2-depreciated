@@ -53,8 +53,15 @@ export default class EditHabitScreen extends React.Component {
         />
         {warning}
         <ColorSelector pickColor={this._pickColor.bind(this)} color={habit.color}/>
-        <Button title="Edit Habit" onPress={this._edit} />
-        <Button title="Delete Habit" onPress={this._delete} />
+        <Button
+          title="Edit Habit"
+          onPress={this._edit}
+        />
+        <Button
+          title="Delete Habit"
+          onPress={this._delete}
+          color="#f44336"
+        />
       </View>
     );
   }
