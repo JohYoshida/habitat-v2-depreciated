@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text, TextInput, StyleSheet, View } from "react-native";
+import { Button, Text, TextInput, ScrollView, StyleSheet, View } from "react-native";
 
 export default class AddQuoteScreen extends React.Component {
   static navigationOptions = {
@@ -19,26 +19,29 @@ export default class AddQuoteScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="text"
-          multiline={true}
-          autoFocus={true}
-          onChangeText={text => this.setState({ text })}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="author"
-          autoCapitalize="words"
-          onChangeText={author => this.setState({ author })}
-        />
-        <TextInput
-          style={styles.textInput}
-          placeholder="source"
-          autoCapitalize="words"
-          onChangeText={source => this.setState({ source })}
-        />
-        <Button title="Add Quote" onPress={this._onPress} />
+        <ScrollView style={styles.scrollContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="text"
+            multiline={true}
+            autoFocus={true}
+            onChangeText={text => this.setState({ text })}
+            />
+          <TextInput
+            style={styles.textInput}
+            placeholder="author"
+            autoCapitalize="words"
+            onChangeText={author => this.setState({ author })}
+            />
+          <TextInput
+            style={styles.textInput}
+            placeholder="source"
+            autoCapitalize="words"
+            onChangeText={source => this.setState({ source })}
+            />
+          <Button title="Add Quote" onPress={this._onPress} />
+        </ScrollView>
+        <View style={styles.container}></View>
       </View>
     );
   }
@@ -53,6 +56,10 @@ export default class AddQuoteScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flex: 1,
     margin: 35
   },
   textInput: {}
