@@ -22,7 +22,8 @@ export default class EditQuoteScreen extends React.Component {
     const { quote } = this.props.navigation.state.params;
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
+        <View style={styles.scrollContainer}>
+          <ScrollView>
           <TextInput
             style={styles.textInput}
             defaultValue={quote.text}
@@ -55,7 +56,8 @@ export default class EditQuoteScreen extends React.Component {
             color="#f44336"
           />
         </ScrollView>
-        <View style={styles.container}></View>
+        </View>
+        <View style={styles.keyboardSpace}></View>
       </View>
     );
   }
@@ -94,8 +96,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
-    flex: 1,
+    flex: 3,
     margin: 35
+  },
+  keyboardSpace: {
+    flex: 2
   },
   textInput: {}
 });

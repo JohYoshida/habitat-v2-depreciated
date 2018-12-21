@@ -19,7 +19,8 @@ export default class AddQuoteScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
+        <View style={styles.scrollContainer}>
+          <ScrollView>
           <TextInput
             style={styles.textInput}
             placeholder="text"
@@ -41,7 +42,8 @@ export default class AddQuoteScreen extends React.Component {
             />
           <Button title="Add Quote" onPress={this._onPress} />
         </ScrollView>
-        <View style={styles.container}></View>
+        </View>
+        <View style={styles.keyboardSpace}></View>
       </View>
     );
   }
@@ -59,8 +61,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
-    flex: 1,
+    flex: 3,
     margin: 35
+  },
+  keyboardSpace: {
+    flex: 2
   },
   textInput: {}
 });
