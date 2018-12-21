@@ -11,6 +11,13 @@ class ColorPicker extends Component {
     };
   }
 
+  componentDidMount() {
+    const { color } = this.props;
+    if (color) {
+      this.setState({ color });
+    }
+  }
+
   render() {
     const colors = [
       "red",
