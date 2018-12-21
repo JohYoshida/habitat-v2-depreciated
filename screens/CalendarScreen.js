@@ -85,26 +85,42 @@ export default class CalendarScreen extends React.Component {
   _onPressDay = (month, day) => {
     const { habit } = this.props.navigation.state.params;
     const { data, year, userToken } = this.state;
-    fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        day,
-        month,
-        value: "1"
+    const log = data[`${month}-${day}`]
+    if (!log) {
+      fetch(`${URL}/users/${userToken}/habits/${habit.id}/${year}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          day,
+          month,
+          value: "1"
+        })
       })
-    })
-      .then(res => res.json())
-      .then(json => {
-        if (json.data) {
-          data[`${json.data.month}-${json.data.day}`] = json.data;
-          this.setState({ data });
-        }
-      })
-      .catch(err => console.log("Error!", err));
+        .then(res => res.json())
+        .then(json => {
+          if (json.data) {
+            data[`${json.data.month}-${json.data.day}`] = json.data;
+            this.setState({ data });
+          }
+        })
+        .catch(err => console.log("Error!", err));
+    } else {
+      if (Number(log.value)) {
+        let selectedDay = {
+          month,
+          day,
+          habit_id: log.habit_id,
+          id: log.id,
+        };
+        let value = Number(log.value) + 1;
+        this._submitEdits(selectedDay, value);
+      }
+    }
+
+
   };
 
   _submitEdits = (selectedDay, newValue) => {
