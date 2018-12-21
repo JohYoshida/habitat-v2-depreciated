@@ -1,12 +1,9 @@
 import React from "react";
 import {
-  Button,
-  Modal,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View
 } from "react-native";
@@ -17,7 +14,6 @@ class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editModalVisible: false,
       selectedDay: {
         day: "",
         month: "",
@@ -67,30 +63,6 @@ class Calendar extends React.Component {
             onLongPress={this._editDay}
           />
         </View>
-
-        <Modal
-          animationType="slide"
-          visible={this.state.editModalVisible}
-          onRequestClose={this._hideEditModal}
-        >
-          <View style={styles.container}>
-            <Text style={styles.text}>
-              {selectedDay.month} {selectedDay.day}
-            </Text>
-            <TextInput
-              autoFocus={true}
-              placeholder="value"
-              defaultValue={selectedDay.value ? selectedDay.value : ""}
-              onChangeText={newValue => {
-                let { selectedDay } = this.state;
-                selectedDay.newValue = newValue;
-                this.setState({ selectedDay });
-              }}
-            />
-            <Button title="Edit" onPress={this._submitEdit} />
-            <Button title="Delete" onPress={this._deleteDay} />
-          </View>
-        </Modal>
       </ScrollView>
     );
   }
@@ -99,39 +71,12 @@ class Calendar extends React.Component {
     const { year } = this.props;
     const { newValue } = this.state.selectedDay;
     const selectedDay = { id, habit_id, year, month, day, value, newValue };
-    this.setState({ editModalVisible: true, selectedDay });
-  };
-
-  _deleteDay = () => {
-    const { habit_id, month, day } = this.state.selectedDay;
-    this.props.onPressDelete(habit_id, month, day);
-    this._hideEditModal();
-  };
-
-  _hideEditModal = () => {
-    this.setState({ editModalVisible: false });
-  };
-
-  _submitEdit = () => {
-    this.props.onPressSubmitEdits(this.state.selectedDay);
-    this._hideEditModal();
-  };
-
-  _goBackYear = () => {
-    console.log("back");
-  };
-
-  _goForwardYear = () => {
-    console.log("forward");
+    this.setState({ selectedDay });
+    this.props.navToEditDay(selectedDay);
   };
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 100,
-    alignItems: "center"
-  },
   header: {
     flex: 1,
     alignSelf: "center",

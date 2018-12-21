@@ -36,10 +36,9 @@ export default class CalendarScreen extends React.Component {
           year={year}
           data={data}
           onPressDay={this._onPressDay}
-          onPressSubmitEdits={this._onPressSubmitEdits}
-          onPressDelete={this._onPressDelete}
           goForwardYear={this._goForwardYear}
           goBackYear={this._goBackYear}
+          navToEditDay={this._navtoEditDay}
         />
       </View>
     );
@@ -108,9 +107,9 @@ export default class CalendarScreen extends React.Component {
       .catch(err => console.log("Error!", err));
   };
 
-  _onPressSubmitEdits = newData => {
+  _submitEdits = (selectedDay, newValue) => {
     const { userToken, year } = this.state;
-    const { habit_id, month, day, newValue } = newData;
+    const { habit_id, month, day } = selectedDay;
     fetch(
       `${URL}/users/${userToken}/habits/${habit_id}/${year}/${month}/${day}`,
       {
@@ -123,7 +122,6 @@ export default class CalendarScreen extends React.Component {
       }
     )
       .then(res => {
-        // console.log(res.json());
         let { data } = this.state;
         data[`${month}-${day}`].value = newValue;
         this.setState({ data });
@@ -151,6 +149,14 @@ export default class CalendarScreen extends React.Component {
       })
       .catch(err => console.log(error));
   };
+
+  _navtoEditDay = (selectedDay) => {
+    this.props.navigation.navigate("EditDay", {
+      selectedDay,
+      postDay: this._submitEdits.bind(this),
+      deleteDay: this._onPressDelete.bind(this)
+    });
+  }
 }
 
 const styles = StyleSheet.create({

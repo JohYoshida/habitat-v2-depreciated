@@ -3,7 +3,6 @@ import {
   AsyncStorage,
   Alert,
   Button,
-  Modal,
   Platform,
   Text,
   TextInput,
@@ -13,7 +12,6 @@ import {
   View
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Calendar from "../components/Calendar";
 import HabitsList from "../components/HabitsList";
 
 const { URL } = require("../constants/Constants");
