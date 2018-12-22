@@ -61,7 +61,7 @@ export default {
   graphite_Primary: "#616161",
   graphite_Light: "#8e8e8e",
   graphite_Dark: "#373737",
-  default_Primary: "#5A56FA",
-  default_Light: "#9583ff",
-  default_Dark: "#002cc6",
+  default_Primary: "#0d47a1",
+  default_Light: "#5472d3",
+  default_Dark: "#002171",
 };
