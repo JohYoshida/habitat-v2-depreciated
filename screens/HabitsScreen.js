@@ -21,7 +21,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     title: "Habits",
     headerStyle: {
-      backgroundColor: Colors.default_Primary,
+      backgroundColor: Colors.default_Dark,
     },
     headerTintColor: '#fff',
     headerTitleStyle: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     margin: 5,
-    backgroundColor: Colors.default_Dark,
+    backgroundColor: Colors.default_Primary,
     borderRadius: 100,
     elevation: 10,
   },
