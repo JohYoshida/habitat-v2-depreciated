@@ -9,12 +9,17 @@ const { URL } = require("../constants/Constants");
 export default class CalendarScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     let habit = navigation.getParam("habit");
+    let headerTintColor;
+    const { color } = habit;
+    if (color === "tomato" || color === "blueberry" || color === "grape" || color === "graphite" || color === "default") {
+      headerTintColor = "white";
+    } else headerTintColor = "black";
     return {
       title: navigation.getParam("title", ""),
       headerStyle: {
         backgroundColor: Colors[`${habit.color}_Primary`],
       },
-      headerTintColor: '#fff',
+      headerTintColor,
     };
   };
 
