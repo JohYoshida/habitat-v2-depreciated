@@ -43,7 +43,7 @@ export default {
   sage_Primary: "#00C579",
   sage_Light: "#5df9a8",
   sage_Dark: "#00934c",
-  peacock_Primary: "#e00000",
+  peacock_Primary: "#1887EA",
   peacock_Light: "#69b6ff",
   peacock_Dark: "#005bb7",
   blueberry_Primary: "#5300B8",
