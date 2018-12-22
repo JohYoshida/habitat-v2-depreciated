@@ -82,87 +82,89 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 1
   },
-  tomato_Dark: {
-    flex: 1,
-    backgroundColor: Colors.tomato_Dark
+  white: {
+    color: "white"
   },
-  tangerine_Dark: {
-    flex: 1,
-    backgroundColor: Colors.tangerine_Dark
-  },
-  banana_Dark: {
-    flex: 1,
-    backgroundColor: Colors.banana_Dark
-  },
-  basil_Dark: {
-    flex: 1,
-    backgroundColor: Colors.basil_Dark
-  },
-  sage_Dark: {
-    flex: 1,
-    backgroundColor: Colors.sage_Dark
-  },
-  peacock_Dark: {
-    flex: 1,
-    backgroundColor: Colors.peacock_Dark
-  },
-  blueberry_Dark: {
-    flex: 1,
-    backgroundColor: Colors.blueberry_Dark
-  },
-  lavender_Dark: {
-    flex: 1,
-    backgroundColor: Colors.lavender_Dark
-  },
-  grape_Dark: {
-    flex: 1,
-    backgroundColor: Colors.grape_Dark
-  },
-  graphite_Dark: {
-    flex: 1,
-    backgroundColor: Colors.graphite_Dark
-  },
-  default_Dark: {
-    flex: 1,
-    backgroundColor: Colors.default_Dark
+  black: {
+    color: "black"
   },
   tomato_Light: {
     flex: 1,
     backgroundColor: Colors.tomato_Light
   },
+  tomato_Dark: {
+    flex: 1,
+    backgroundColor: Colors.tomato_Dark
+  },
   tangerine_Light: {
     flex: 1,
     backgroundColor: Colors.tangerine_Light
+  },
+  tangerine_Dark: {
+    flex: 1,
+    backgroundColor: Colors.tangerine_Dark
   },
   banana_Light: {
     flex: 1,
     backgroundColor: Colors.banana_Light
   },
+  banana_Dark: {
+    flex: 1,
+    backgroundColor: Colors.banana_Dark
+  },
   basil_Light: {
     flex: 1,
     backgroundColor: Colors.basil_Light
+  },
+  basil_Dark: {
+    flex: 1,
+    backgroundColor: Colors.basil_Dark
   },
   sage_Light: {
     flex: 1,
     backgroundColor: Colors.sage_Light
   },
+  sage_Dark: {
+    flex: 1,
+    backgroundColor: Colors.sage_Dark
+  },
   peacock_Light: {
     flex: 1,
     backgroundColor: Colors.peacock_Light
+  },
+  peacock_Dark: {
+    flex: 1,
+    backgroundColor: Colors.peacock_Dark
   },
   blueberry_Light: {
     flex: 1,
     backgroundColor: Colors.blueberry_Light
   },
+  blueberry_Dark: {
+    flex: 1,
+    backgroundColor: Colors.blueberry_Dark
+  },
   lavender_Light: {
     flex: 1,
     backgroundColor: Colors.lavender_Light
+  },
+  lavender_Dark: {
+    flex: 1,
+    backgroundColor: Colors.lavender_Dark
   },
   grape_Light: {
     flex: 1,
     backgroundColor: Colors.grape_Light
   },
+  grape_Dark: {
+    flex: 1,
+    backgroundColor: Colors.grape_Dark
+  },
   flamingo_Light: {
+    flex: 1,
+    backgroundColor: Colors.flamingo_Light
+  },
+  flamingo_Dark :{
     flex: 1,
     backgroundColor: Colors.flamingo_Light
   },
@@ -170,9 +172,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.graphite_Light
   },
+  graphite_Dark: {
+    flex: 1,
+    backgroundColor: Colors.graphite_Dark
+  },
   default_Light: {
     flex: 1,
     backgroundColor: Colors.default_Light
+  },
+  default_Dark: {
+    flex: 1,
+    backgroundColor: Colors.default_Dark
   },
 });
 
