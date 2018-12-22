@@ -8,11 +8,36 @@ const { Months } = require("../constants/Constants");
 class Year extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      lightText: "",
+      darkText: "",
+    };
+  }
+
+  componentDidMount() {
+    const { habit } = this.props;
+    const { color } = habit;
+    let lightText, darkText;
+
+    if (color === "tomato" || color === "grape" || color === "graphite" || color === "default") {
+      lightText = "black";
+      darkText = "white";
+    } else if (color === "banana" || color === "sage") {
+      lightText = "black";
+      darkText = "black";
+    } else if (color === "blueberry") {
+      lightText = "white";
+      darkText = "white";
+    } else {
+      lightText = "black";
+      darkText = "white";
+    }
+    this.setState({ lightText, darkText });
   }
 
   render() {
     const { data, habit } = this.props;
+    const { lightText, darkText } = this.state;
     const Year = [];
     Months.forEach(month => {
       const Days = [];
@@ -37,8 +62,8 @@ class Year extends React.Component {
             >
               <View style={styles.day}>
                 <View style={styles[`${habit.color}_Dark`]}>
-                  <Text>{i}</Text>
-                  <Text>{data[key].value}</Text>
+                  <Text style={styles[darkText]}>{i}</Text>
+                  <Text style={styles[darkText]}>{data[key].value}</Text>
                 </View>
               </View>
             </TouchableOpacity>
@@ -52,7 +77,7 @@ class Year extends React.Component {
             >
               <View style={styles.day}>
                 <View style={styles[`${habit.color}_Light`]}>
-                  <Text>{i}</Text>
+                  <Text style={styles[lightText]}>{i}</Text>
                 </View>
               </View>
             </TouchableOpacity>
