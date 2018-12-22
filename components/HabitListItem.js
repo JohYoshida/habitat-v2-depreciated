@@ -10,59 +10,11 @@ class HabitListItem extends PureComponent {
 
   render() {
     const { habit } = this.props;
-    let primary = "";
-    let secondary = "";
-    switch (habit.color) {
-      case "tomato":
-        primary = Colors.tomato_Primary;
-        secondary = Colors.tomato_Dark;
-        break;
-      case "tangerine":
-        primary = Colors.tangerine_Primary;
-        secondary = Colors.tangerine_Dark;
-        break;
-      case "banana":
-        primary = Colors.banana_Primary;
-        secondary = Colors.banana_Dark;
-        break;
-      case "basil":
-        primary = Colors.basil_Primary;
-        secondary = Colors.basil_Dark;
-        break;
-      case "sage":
-        primary = Colors.sage_Primary;
-        secondary = Colors.sage_Dark;
-        break;
-      case "peacock":
-        primary = Colors.peacock_Primary;
-        secondary = Colors.peacock_Dark;
-        break;
-      case "blueberry":
-        primary = Colors.blueberry_Primary;
-        secondary = Colors.blueberry_Dark;
-        break;
-      case "lavender":
-        primary = Colors.lavender_Primary;
-        secondary = Colors.lavender_Dark;
-        break;
-      case "grape":
-      primary = Colors.grape_Primary;
-      secondary = Colors.grape_Dark;
-        break;
-      case "flamingo":
-      primary = Colors.flamingo_Primary;
-      secondary = Colors.flamingo_Dark;
-        break;
-      case "graphite":
-      primary = Colors.graphite_Dark;
-      secondary = Colors.graphite_Dark;
-        break;
-      case "default":
-      primary = Colors.default_Primary;
-      secondary = Colors.default_Dark;
-        break;
-      default:
-    }
+    const { color } = habit
+    let textColor;
+    if (color === "tomato" || color === "blueberry" || color === "grape" || color === "graphite" || color === "default") {
+      textColor = "white";
+    } else textColor = "black";
     return (
       <TouchableOpacity
         onPress={this._onPress.bind(this, habit)}
@@ -75,12 +27,12 @@ class HabitListItem extends PureComponent {
             padding: 5,
             borderWidth: 1,
             borderRadius: 5,
-            backgroundColor: primary,
-            borderColor: secondary
+            backgroundColor: Colors[`${habit.color}_Primary`],
+            borderColor: Colors[`${habit.color}_Dark`]
           }}
         >
-          <Text style={styles.name}>{habit.name}</Text>
-          <Text style={styles.date}>Created at {habit.createdAt}</Text>
+          <Text style={styles[`name_${textColor}`]}>{habit.name}</Text>
+          <Text style={styles[`date_${textColor}`]}>Created at {habit.createdAt}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -96,14 +48,23 @@ class HabitListItem extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  name: {
+  name_white: {
     fontSize: 15,
     color: "white"
   },
-  date: {
+  name_black: {
+    fontSize: 15,
+    color: "black"
+  },
+  date_white: {
     fontSize: 10,
     color: "white"
-  }
+  },
+  date_black: {
+    fontSize: 10,
+    color: "black"
+  },
+
 });
 
 export default HabitListItem;
