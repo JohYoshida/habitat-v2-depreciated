@@ -19,7 +19,7 @@ export default class QuotesScreen extends React.Component {
     headerStyle: {
       backgroundColor: Colors.basil_Primary,
     },
-    headerTintColor: '#fff',
+    headerTintColor: '#000',
   };
 
   constructor(props) {
