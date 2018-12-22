@@ -20,14 +20,6 @@ class ColorPicker extends Component {
 
   render() {
     const colors = [
-      // "red",
-      // "orange",
-      // "yellow",
-      // "lime",
-      // "green",
-      // "blue",
-      // "purple",
-      // "indigo"
       "tomato",
       "tangerine",
       "banana",
@@ -111,10 +103,11 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "center",
-    height: 25,
-    width: 25,
+    height: 38,
+    width: 38,
     borderRadius: 100,
-    margin: 2
+    margin: 2,
+    elevation: 5,
   },
   tomato: {
     flex: 1,
