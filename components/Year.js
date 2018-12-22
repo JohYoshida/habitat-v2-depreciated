@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   day: {
     flex: 0,
-    borderWidth: 1,
+    // borderWidth: 1,
     height: 40,
     margin: 1
   },
