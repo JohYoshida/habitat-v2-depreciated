@@ -23,6 +23,6 @@
     "react-navigation": "^2.18.3"
   },
   "devDependencies": {
-    "jest-expo": "30.0.0"
+    "jest-expo": "46.0.1"
   }
 }
