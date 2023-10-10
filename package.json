@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
-    "expo": "^46.0.14",
+    "expo": "^49.0.13",
     "moment": "^2.29.4",
     "npm": "^8.19.2",
     "react": "16.3.1",
@@ -23,6 +23,6 @@
     "react-navigation": "^2.18.3"
   },
   "devDependencies": {
-    "jest-expo": "46.0.1"
+    "jest-expo": "49.0.0"
   }
 }
