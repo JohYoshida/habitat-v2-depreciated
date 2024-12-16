@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
-    "expo": "^49.0.13",
+    "expo": "^52.0.18",
     "moment": "^2.29.4",
     "npm": "^8.19.2",
     "react": "16.3.1",
